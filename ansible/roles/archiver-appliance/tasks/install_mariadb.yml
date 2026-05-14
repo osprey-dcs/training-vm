@@ -23,7 +23,7 @@
 - name: Manage MariaDB service; create AA user and database
   become: true
   when: not in_container
-  block: 
+  block:
     - name: Manage MariaDB service
       ansible.builtin.systemd_service:
         name: mariadb
