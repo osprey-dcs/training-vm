@@ -32,12 +32,12 @@
 
     - name: MariaDB - create Archiver-Appliance database
       community.mysql.mysql_db:
-        login_unix_socket: /var/run/mysqld/mysqld.sock
+        login_unix_socket: /var/lib/mysql/mysql.sock
         name: archappl
 
     - name: MariaDB - create Archiver-Appliance user
       community.mysql.mysql_user:
-        login_unix_socket: /var/run/mysqld/mysqld.sock
+        login_unix_socket: /var/lib/mysql/mysql.sock
         name: archappl
         password: archappl
         priv: 'archappl.*:ALL'
