@@ -13,7 +13,9 @@
 - name: Install required RPM dependencies
   become: true
   ansible.builtin.dnf:
-    name: mariadb-server
+    name:
+      - mariadb-server
+      - python3-PyMySQL
     update_cache: true
     state: present
   when: is_redhat
