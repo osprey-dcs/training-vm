@@ -14,4 +14,4 @@ fi
 
 cd ansible
 ansible-galaxy install -r requirements.yml || true
-ansible-playbook $ansible_args playbook.yml -e @vars/local.yml -e initial_setup=false --ask-become-pass
+ansible-playbook $ansible_args playbook.yml -e @vars/local.yml -e initial_setup=false
