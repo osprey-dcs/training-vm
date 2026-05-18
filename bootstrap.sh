@@ -47,7 +47,7 @@ if ! command -v git >/dev/null; then
     packages="git"
 fi
 if ! command -v ansible >/dev/null; then
-    packages="${packages} ansible"
+    packages="${packages} ansible-core"
 fi
 if [ "${packages}" ]; then
     echo "Installing prerequisites: ${packages}..."
