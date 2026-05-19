@@ -40,7 +40,7 @@ fi
 # REPO[xyz] (and BRANCH[xyz]
 COLLECTION=${COLLECTION:-"training"}
 SLUGFILE=${SLUGFILE:-"/etc/epics-training"}
-COLLECTION_REPO=${COLLECTION_REPO:-"https://github.com/waynelewis/training-collection"}
+COLLECTION_REPO=${COLLECTION_REPO:-"https://github.com/osprey-dcs/training-collection"}
 
 # Install prerequisites: Git, Ansible
 if ! command -v git >/dev/null; then
