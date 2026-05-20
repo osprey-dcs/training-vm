@@ -11,9 +11,9 @@
     mode: '0777'
     state: directory
 
-# Install elasticsearch container
-- name: Install elasticsearch container
-  become: true
+# Create elasticsearch container
+- name: Create elasticsearch container
+  #become: true
   containers.podman.podman_container:
     name: elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:{{ elasticsearch_version }}
@@ -31,14 +31,14 @@
     healthcheck_start_period: "10m"
 
 - name: Generate systemd unit file for elasticsearch
-  become: true
+  #become: true
   containers.podman.podman_generate_systemd:
     name: elasticsearch
     new: true
     dest: /etc/systemd/system
 
 - name: Enable elasticsearch container
-  become: true
+  #become: true
   ansible.builtin.systemd:
     name: container-elasticsearch
     daemon-reload: true
