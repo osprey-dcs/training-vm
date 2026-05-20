@@ -109,6 +109,7 @@
   become: true
 
 - name: Hide user vagrant from the GDM greeter (login user select)
+  ignore_errors: true
   ansible.builtin.template:
     src: user.conf_nogreeter
     dest: /var/lib/AccountsService/users/vagrant
