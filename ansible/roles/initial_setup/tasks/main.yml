@@ -120,3 +120,19 @@
     dest: /usr/bin/python
     state: link
   become: true
+
+- name: Disable selinux on Redhat variants
+  when: ansible_facts['os_family'] == 'RedHat'
+  become: true
+  ansible.posix.selinux:
+    state: disabled
+    update_kernel_param: true
+  
+- name: Disable firewall service (at least for RedHat variants)
+  when: ansible_facts['os_family'] == 'RedHat'
+  become: true
+  ansible.builtin.systemd_service:
+    name: firewalld.service
+    state: stopped
+    enabled: false
+
