@@ -13,6 +13,7 @@
 
 # Install elasticsearch container
 - name: Install elasticsearch container
+  become: true
   containers.podman.podman_container:
     name: elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:{{ elasticsearch_version }}
@@ -34,7 +35,7 @@
   containers.podman.podman_generate_systemd:
     name: elasticsearch
     new: true
-    dest: /etc/system/systemd
+    dest: /etc/systemd/system
 
 - name: Enable elasticsearch container
   become: true
