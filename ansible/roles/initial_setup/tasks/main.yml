@@ -6,7 +6,7 @@
 
 - name: expand the root disk
   include_tasks: grow_disk.yml
-  when: not in_container
+  when: false
 
 - name: Replace mirrorlist with specific mirrors for Rocky
   when: ansible_facts['distribution'] == 'Rocky'
