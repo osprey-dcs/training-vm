@@ -14,7 +14,7 @@
 # Install elasticsearch container
 - name: Install elasticsearch container
   containers.podman.podman_container:
-    name: es
+    name: elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:{{ elasticsearch_version }}
     state: created
     env:
