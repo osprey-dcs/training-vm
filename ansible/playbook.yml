@@ -139,4 +139,10 @@
       when: archiver_appliance is defined and archiver_appliance | bool
       tags: archiver_appliance
 
+    - name: channelfinder
+      include_role:
+        name: channelfinder
+      when: channelfinder is defined and channelfinder | bool
+      tags: channelfinder
+
   environment: "{{ proxy_env }}"
