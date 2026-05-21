@@ -1,0 +1,10 @@
+---
+- name: Install ramp IOC
+  ansible.builtin.git:
+    repo: https://github.com/osprey-dcs/training-ioc-ramp.git
+    dest: "{{ ioc_install_dir }}/ramp"
+
+- name: Build IOC
+  ansible.builtin.command:
+    cmd: make
+    chdir: "{{ ioc_install_dir }}/ramp"

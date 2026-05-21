@@ -146,4 +146,10 @@
       when: channelfinder is defined | bool
       tags: channelfinder
 
+    - name: iocs
+      include_role: 
+        name: iocs
+      when: iocs is defined and iocs | bool
+      tags: iocs
+
   environment: "{{ proxy_env }}"
