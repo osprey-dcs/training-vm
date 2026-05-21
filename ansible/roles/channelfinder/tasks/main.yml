@@ -3,6 +3,13 @@
 - name: Install elasticsearch
   ansible.builtin.include_tasks:
     file: install_elasticsearch.yml
+  when: channelfinder | bool
+
+# Remove Elasticsearch container
+- name: Remove elasticsearch
+  ansible.builtin.include_tasks:
+    file: remove_elasticsearch.yml
+  when: not channelfinder | bool
 
 # Install channelfinder container
 #- name: Install channelfinder
