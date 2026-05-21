@@ -142,7 +142,8 @@
     - name: channelfinder
       include_role:
         name: channelfinder
-      when: channelfinder is defined and channelfinder | bool
+          #when: channelfinder is defined and channelfinder | bool
+      when: channelfinder is defined | bool
       tags: channelfinder
 
   environment: "{{ proxy_env }}"
