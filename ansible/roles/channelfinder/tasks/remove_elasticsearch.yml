@@ -1,5 +1,14 @@
 ---
 
+# Stop and disable container
+- name: Stop and disable elasticsearch container
+  ansible.builtin.systemd:
+    name: elasticsearch
+    daemon-reload: true
+    state: stopped
+    enabled: false
+    scope: user
+
 # Remove elasticsearch container
 - name: Remove elasticsearch container
   containers.podman.podman_container:
@@ -13,11 +22,3 @@
     name: docker.elastic.co/elasticsearch/elasticsearch:{{ elasticsearch_version }}
     state: absent
 
-# Stop and disable container
-- name: Stop and disable elasticsearch container
-  ansible.builtin.systemd:
-    name: elasticsearch
-    daemon-reload: true
-    state: stopped
-    enabled: disabled
-    scope: user
