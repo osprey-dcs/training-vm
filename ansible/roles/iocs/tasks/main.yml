@@ -1,6 +1,7 @@
 ---
 # Create IOC top-level directory
 - name: Create IOC top-level directory
+  become: true
   ansible.builtin.file:
     path: "{{ ioc_install_dir }}"
     state: directory
@@ -9,6 +10,7 @@
     mode: 0755
 
 # Install IOCs
-- name: Install ramp IOC
-  include_tasks: install_ramp_ioc.yml
+- name: Install  IOCs
+  include_tasks: install_iocs.yml
   when: iocs is defined and iocs | bool
+  loop: "{{ ioc_list }}"

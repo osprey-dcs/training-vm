@@ -1,2 +1,9 @@
 ---
 ioc_install_dir: /opt/iocs
+
+ioc_list:
+  - name: ramp
+    url: https://github.com/osprey-dcs/training-ioc-ramp.git
+    path: ramp
+    ioc_name: training-ramp
+    iocBoot_dir: ramp
