@@ -7,3 +7,8 @@ ioc_list:
     path: ramp
     ioc_name: training-ramp
     iocBoot_dir: ramp
+
+ioc_fetch_list:
+  - name: epics-train-2026
+    url: https://github.com/kasemir/epics-train-2026.git
+    path: epics-train-2026-kk
