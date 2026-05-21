@@ -73,6 +73,7 @@
           - sudo
           - openssl
           - procServ
+          - socat
           - "@{{ distro.gnome_group }}"
         allowerasing: true # fix version conflicts for curl and coreutils on Rocky
 
