@@ -28,6 +28,10 @@
     auto_remove: true
     health_cmd: "curl http://localhost:9200/"
     healthcheck_start_period: "10m"
+    quadlet_options:
+      - |
+        [Install]
+        WantedBy=default.target
 
 
 - name: Enable elasticsearch container
