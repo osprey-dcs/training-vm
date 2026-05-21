@@ -32,7 +32,7 @@
 
 - name: Enable elasticsearch container
   ansible.builtin.systemd:
-    name: container-elasticsearch
+    name: elasticsearch
     daemon-reload: true
     state: started
     enabled: true
