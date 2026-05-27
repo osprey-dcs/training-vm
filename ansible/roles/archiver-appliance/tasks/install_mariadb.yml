@@ -30,14 +30,18 @@
         state: started
         enabled: true
 
+    - name: Set MariaDB socket path
+      ansible.builtin.set_fact:
+        mariadb_socket: "{{ '/var/run/mysqld/mysqld.sock' if is_debian else '/var/lib/mysql/mysql.sock' }}"
+
     - name: MariaDB - create Archiver-Appliance database
       community.mysql.mysql_db:
-        login_unix_socket: /var/lib/mysql/mysql.sock
+        login_unix_socket: {{ mariadb_socket }}
         name: archappl
 
     - name: MariaDB - create Archiver-Appliance user
       community.mysql.mysql_user:
-        login_unix_socket: /var/lib/mysql/mysql.sock
+        login_unix_socket: {{ mariadb_socket }}
         name: archappl
         password: archappl
         priv: 'archappl.*:ALL'
