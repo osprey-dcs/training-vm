@@ -36,12 +36,12 @@
 
     - name: MariaDB - create Archiver-Appliance database
       community.mysql.mysql_db:
-        login_unix_socket: {{ mariadb_socket }}
+        login_unix_socket: "{{ mariadb_socket }}"
         name: archappl
 
     - name: MariaDB - create Archiver-Appliance user
       community.mysql.mysql_user:
-        login_unix_socket: {{ mariadb_socket }}
+        login_unix_socket: "{{ mariadb_socket }}"
         name: archappl
         password: archappl
         priv: 'archappl.*:ALL'
