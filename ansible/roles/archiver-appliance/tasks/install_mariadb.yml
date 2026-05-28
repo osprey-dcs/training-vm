@@ -44,5 +44,10 @@
         login_unix_socket: "{{ mariadb_socket }}"
         name: archappl
         password: archappl
-        priv: 'archappl.*:ALL'
+        priv: '*.*:ALL'
         state: present
+
+    - name: ensure mariadb privileges are set
+      become: true
+      ansible.builtin.shell:
+        cmd: "mariadb --execute \"GRANT ALL ON archappl.* TO 'archappl' identified by 'archappl';\""
