@@ -1,4 +1,9 @@
 ---
+# TODO: Add an IOC with iocStats loaded to provide some meaningful PVs.
+# TODO: Add a vacuum IOC
+# TODO: Add a sequence IOC
+# TODO: Update the ramp IOC with PVs for sine, noise
+
 # Define local EPICS IOC installation path
 ioc_install_dir: /opt/iocs
 
