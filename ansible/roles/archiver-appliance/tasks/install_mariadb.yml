@@ -44,10 +44,11 @@
         login_unix_socket: "{{ mariadb_socket }}"
         name: archappl
         password: archappl
-        priv: '*.*:ALL'
+        priv: 'archappl.*:ALL'
         state: present
 
+    # Brute force the privilege setting as the priv: directive in the above 
+    # task does not appear to work.
     - name: ensure mariadb privileges are set
-      become: true
       ansible.builtin.shell:
         cmd: "mariadb --execute \"GRANT ALL ON archappl.* TO 'archappl' identified by 'archappl';\""
