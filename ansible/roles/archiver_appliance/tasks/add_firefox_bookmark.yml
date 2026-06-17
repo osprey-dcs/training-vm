@@ -13,14 +13,35 @@
     name: sqlite
     state: present
 
+- name: check for firefox profile
+  ansible.builtin.find:
+    paths:
+      - "/home/{{ firefox_user }}/.mozilla/firefox/"
+      - "/home/{{ firefox_user }}/snap/firefox/common/.mozilla/firefox/"
+    patterns: "*.default,*.default-release,*.default-default" # Common patterns for default profiles
+    file_type: directory
+  register: ff_profile_find
+
 - name: Ensure Firefox profile exists
   become: true
   become_user: "{{ firefox_user }}"
   ansible.builtin.shell:
-    cmd: "firefox -headless -CreateProfile {{ firefox_profile_name }} || true"
-  environment:
-    DISPLAY: ":0"
+    cmd: "firefox &"
+  when: ff_profile_find.matched == 0
   changed_when: false
+
+- name: wait for firefox to start
+  ansible.builtin.command: sleep 10s
+  changed_when: false
+  when: ff_profile_find.matched == 0
+
+- name: kill firefox
+  become: true
+  become_user: "{{ firefox_user }}"
+  ansible.builtin.shell:
+    cmd: kill $(pidof firefox)
+  changed_when: false
+  when: ff_profile_find.matched == 0
 
 - name: Find the default Firefox profile directory
   ansible.builtin.find:
