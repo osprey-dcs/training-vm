@@ -7,11 +7,11 @@ if [[ "$installer" == "apt" ]]; then
         add-apt-repository ppa:ansible/ansible
     fi
     apt-get update; apt-get install -y ansible python3-jmespath
-elif [[ "$installer" == "dnf" ]]; then
+elif [[ $(cat /etc/os-release =~ rhel ]]; then
     dnf install -y epel-release || dnf update -y --refresh
     dnf install -y ansible python3-jmespath
 fi
 
-cd /ansible
+cd ansible
 ansible-galaxy install -r requirements.yml || true
 ansible-playbook $ansible_args playbook.yml -e @vars/local.yml -e initial_setup=true
