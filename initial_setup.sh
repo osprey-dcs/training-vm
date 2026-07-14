@@ -7,9 +7,9 @@ if [[ "$installer" == "apt" ]]; then
         add-apt-repository ppa:ansible/ansible
     fi
     apt-get update; apt-get install -y ansible python3-jmespath
-elif [[ $(cat /etc/os-release =~ rhel ]]; then
-    dnf install -y epel-release || dnf update -y --refresh
-    dnf install -y ansible python3-jmespath
+elif [[ $(cat /etc/os-release) =~ rhel ]]; then
+    sudo dnf install -y epel-release || dnf update -y --refresh
+    sudo dnf install -y ansible python3-jmespath
 fi
 
 cd ansible
