@@ -12,6 +12,12 @@ elif [[ $(cat /etc/os-release) =~ rhel ]]; then
     sudo dnf install -y ansible python3-jmespath
 fi
 
-cd ansible
+# Check if we have the vagrant-created /ansible directory
+if [ -d "/ansible" ]; then
+    cd /ansible
+else
+    cd ansible
+fi
+
 ansible-galaxy install -r requirements.yml || true
 ansible-playbook $ansible_args playbook.yml -e @vars/local.yml -e initial_setup=true
