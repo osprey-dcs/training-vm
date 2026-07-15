@@ -123,7 +123,7 @@
   ansible.builtin.template:
     src: user.conf_nogreeter
     dest: /var/lib/AccountsService/users/vagrant
-  when: vagrant in getent_passwd.keys()
+  when: "'vagrant' in getent_passwd.keys()"
 
 - name: Ensure that python refers to python3 (fixes issue with Rocky container)
   ansible.builtin.file:
