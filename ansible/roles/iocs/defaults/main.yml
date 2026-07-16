@@ -1,0 +1,4 @@
+---
+# Defaults for EPICS IOCs role
+
+epics_run_user: epics-run
