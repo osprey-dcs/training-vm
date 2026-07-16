@@ -1,6 +1,29 @@
 ---
-# Create a user to own the installed IOCs
-- name: create EPICS IOC user
+# Install required packages for IOCs
+- name: install packages
+  become: true
+  ansible.builtin.dnf:
+    name: 
+      - procServ
+      - socat
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: install packages
+  become: true
+  ansible.builtin.apt:
+    name: 
+      - procserv
+      - socat
+  when: ansible_facts['os_family'] == "Debian"
+
+# Create a user and group to own the installed IOCs
+- name: create EPICS IOC runner group
+  become: true
+  ansible.builtin.group:
+    name: "{{ epics_run_user }}"
+    state: present
+
+- name: create EPICS IOC runner user
   become: true
   ansible.builtin.user:
     name: "{{ epics_run_user }}"
@@ -22,15 +45,12 @@
 
 # Install and build IOCs
 - name: Install and build IOCs
-  become: true
-  become_user: "{{ epics_run_user }}"
   include_tasks: install_iocs.yml
   when: iocs is defined and iocs | bool
   loop: "{{ ioc_list }}"
 
 # Fetch IOCs that do not need building
 - name: Fetch IOCs
-  become: trueinclude_tasks: fetch_iocs.yml
-  become_user: "{{ epics_run_user }}"
+  include_tasks: fetch_iocs.yml
   when: iocs is defined and iocs | bool
   loop: "{{ ioc_fetch_list }}"

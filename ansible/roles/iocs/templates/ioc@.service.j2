@@ -18,8 +18,8 @@ SyslogIdentifier=ioc@ioc{{ item.ioc_name }}
 RuntimeDirectory=ioc@ioc{{ item.ioc_name }}
 RuntimeDirectoryMode=0755
 
-User=epics-dev
-Group=epics-dev
+User={{ epics_run_user }}
+Group={{ epics_run_user }}
 
 [Install]
 WantedBy=multi-user.target
