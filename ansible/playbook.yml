@@ -161,6 +161,12 @@
       when: archiver_appliance is defined and archiver_appliance | bool
       tags: archiver_appliance
 
+    - name: IOCs
+      include_role:
+        name: iocs
+      when: iocs is defined and iocs | bool
+      tags: iocs
+
   # Defined at the play level (not inside a role's handlers/main.yml) so it's
   # always registered and notifiable regardless of which per-feature roles
   # are enabled for a given run - training_vm_homepage_dir is living in
