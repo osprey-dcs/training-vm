@@ -1,22 +1,36 @@
 ---
+# Create a user to own the installed IOCs
+- name: create EPICS IOC user
+  become: true
+  ansible.builtin.user:
+    name: "{{ epics_run_user }}"
+    comment: EPICS IOC user
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: "{{ epics_run_user }}"
+    state: present
+
 # Create IOC top-level directory
 - name: Create IOC top-level directory
   become: true
   ansible.builtin.file:
     path: "{{ ioc_install_dir }}"
     state: directory
-    owner: epics-dev
-    group: epics-dev
+    owner: "{{ epics_run_user }}"
+    group: "{{ epics_run_user }}"
     mode: 0755
 
 # Install and build IOCs
 - name: Install and build IOCs
+  become: true
+  become_user: "{{ epics_run_user }}"
   include_tasks: install_iocs.yml
   when: iocs is defined and iocs | bool
   loop: "{{ ioc_list }}"
 
 # Fetch IOCs that do not need building
 - name: Fetch IOCs
-  include_tasks: fetch_iocs.yml
+  become: trueinclude_tasks: fetch_iocs.yml
+  become_user: "{{ epics_run_user }}"
   when: iocs is defined and iocs | bool
   loop: "{{ ioc_fetch_list }}"
