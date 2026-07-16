@@ -1,43 +1,52 @@
 ---
-- name: Install {{ item.name }} IOC
-  ansible.builtin.git:
-    repo: "{{ item.url }}"
-    dest: "{{ ioc_install_dir }}/{{ item.path }}"
+- name: check if the URL is valid
+  ansible.builtin.uri:
+    url: "{{ item.url }}"
+  register: result
 
-- name: Build {{ item.name }} IOC
-  ansible.builtin.command:
-    cmd: make
-    chdir: "{{ ioc_install_dir }}/{{ item.path }}"
+- name: Run IOC installation tasks
+  when: "result is not failed"
+  block:
 
-- name: Create log directory 
-  become: true
-  ansible.builtin.file:
-    path: /var/log/procServ
-    owner: epics-dev
-    group: epics-dev
-    mode: '0755'
-    state: directory
+  - name: Install {{ item.name }} IOC
+    ansible.builtin.git:
+      repo: "{{ item.url }}"
+      dest: "{{ ioc_install_dir }}/{{ item.path }}"
 
-- name: Create run directory
-  become: true
-  ansible.builtin.file:
-    path: /run/ioc@ioc{{ item.ioc_name }}
-    owner: epics-dev
-    group: epics-dev
-    mode: '0755'
-    state: directory
+  - name: Build {{ item.name }} IOC
+    ansible.builtin.command:
+      cmd: make
+      chdir: "{{ ioc_install_dir }}/{{ item.path }}"
 
-- name: Create systemd unit file for {{ item.name }} IOC
-  become: true
-  ansible.builtin.template:
-    src: ioc@.service.j2
-    dest: /etc/systemd/system/ioc@ioc{{ item.ioc_name }}.service
+  - name: Create log directory 
+    become: true
+    ansible.builtin.file:
+      path: /var/log/procServ
+      owner: epics-dev
+      group: epics-dev
+      mode: '0755'
+      state: directory
 
-- name: Enable and start IOC process
-  become: true
-  ansible.builtin.systemd_service:
-    name: ioc@ioc{{ item.ioc_name}}.service
-    daemon_reload: true
-    state: restarted
-    enabled: true
+  - name: Create run directory
+    become: true
+    ansible.builtin.file:
+      path: /run/ioc@ioc{{ item.ioc_name }}
+      owner: epics-dev
+      group: epics-dev
+      mode: '0755'
+      state: directory
+
+  - name: Create systemd unit file for {{ item.name }} IOC
+    become: true
+    ansible.builtin.template:
+      src: ioc@.service.j2
+      dest: /etc/systemd/system/ioc@ioc{{ item.ioc_name }}.service
+
+  - name: Enable and start IOC process
+    become: true
+    ansible.builtin.systemd_service:
+      name: ioc@ioc{{ item.ioc_name}}.service
+      daemon_reload: true
+      state: restarted
+      enabled: true
 

@@ -1,4 +1,13 @@
 ---
+- name: check if the URL is valid
+  ansible.builtin.uri:
+    url: "{{ item.url }}"
+  register: result
+
+- name: Run IOC installation tasks
+  when: "result is not failed"
+  block:
+
 - name: Install {{ item.name }} IOC
   ansible.builtin.git:
     repo: "{{ item.url }}"
