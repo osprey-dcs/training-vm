@@ -16,7 +16,7 @@ ioc_list:
   - name: demopvs
     url: https://github.com/osprey-dcs/training-ioc-demopvs.git
     path: demopvs
-    ioc_name: training-demopvs
+    ioc_name: demopvs
     iocBoot_dir: demopvs
 
 # List of IOCs to fetch but not build
