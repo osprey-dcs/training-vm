@@ -9,6 +9,8 @@
   when: "result.status == 200"
   become: true
   become_user: "{{ epics_run_user }}"
+  vars:
+    ansible_remote_tmp: "{{ epics_run_user_tmp }}"
   block:
 
   - name: Install {{ item.name }} IOC
