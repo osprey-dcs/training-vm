@@ -1,5 +1,6 @@
 ---
 - name: disable selinux during install
+  become: true
   ansible.posix.selinux:
     state: disabled
     update_kernel_param: true
