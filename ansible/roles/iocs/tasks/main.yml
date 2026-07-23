@@ -33,6 +33,14 @@
     group: "{{ epics_run_user }}"
     state: present
 
+- name: create a tmp directory for {{ epics_run_user }}
+  become: true
+  ansible.builtin.file:
+    name: "{{ epics_run_user_tmp }}"
+    state: directory
+    owner: "{{ epics_run_user }}"
+    group: "{{ epics_run_user }}"
+
 # Create IOC top-level directory
 - name: Create IOC top-level directory
   become: true
