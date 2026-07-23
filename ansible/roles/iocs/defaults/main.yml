@@ -2,3 +2,4 @@
 # Defaults for EPICS IOCs role
 
 epics_run_user: epics-run
+epics_run_user_tmp: /tmp/.ansible-{{ epics_run_user }}/tmp

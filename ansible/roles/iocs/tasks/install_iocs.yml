@@ -7,22 +7,26 @@
 
 - name: Run IOC installation tasks
   become: true
-  become_user: "{{ epics_run_user }}"
   when: "result.status == 200"
   block:
 
   - name: Install {{ item.name }} IOC
+    become_user: "{{ epics_run_user }}"
+    vars:
+      ansible_remote_tmp: "{{ epics_run_user_tmp }}"
     ansible.builtin.git:
       repo: "{{ item.url }}"
       dest: "{{ ioc_install_dir }}/{{ item.path }}"
 
   - name: Build {{ item.name }} IOC
+    become_user: "{{ epics_run_user }}"
+    vars:
+      ansible_remote_tmp: "{{ epics_run_user_tmp }}"
     ansible.builtin.command:
       cmd: make
       chdir: "{{ ioc_install_dir }}/{{ item.path }}"
 
   - name: Create log directory 
-    become: true
     become_user: root
     ansible.builtin.file:
       path: /var/log/procServ
@@ -32,7 +36,6 @@
       state: directory
 
   - name: Create run directory
-    become: true
     become_user: root
     ansible.builtin.file:
       path: /run/ioc@ioc{{ item.ioc_name }}
@@ -42,14 +45,12 @@
       state: directory
 
   - name: Create systemd unit file for {{ item.name }} IOC
-    become: true
     become_user: root
     ansible.builtin.template:
       src: ioc@.service.j2
       dest: /etc/systemd/system/ioc@ioc{{ item.ioc_name }}.service
 
   - name: Enable and start IOC process
-    become: true
     become_user: root
     ansible.builtin.systemd_service:
       name: ioc@ioc{{ item.ioc_name}}.service
