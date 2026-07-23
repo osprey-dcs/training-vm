@@ -2,7 +2,6 @@
 
 # Create host elasticsearch directory
 - name: Create elasticsearch directory
-  become_method: containers.podman.podman_unshare
   become: true
   ansible.builtin.file:
     path: "{{ elasticsearch_directory }}"
