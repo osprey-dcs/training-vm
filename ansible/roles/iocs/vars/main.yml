@@ -13,11 +13,11 @@ ioc_install_dir: /opt/iocs
 # TODO: Create a different user for owning the IOCs to stop
 # people changing files and causing git pulls to fail.
 ioc_list:
-  - name: ramp
-    url: https://github.com/osprey-dcs/training-ioc-ramp.git
-    path: ramp
-    ioc_name: training-ramp
-    iocBoot_dir: ramp
+  - name: demopvs
+    url: https://github.com/osprey-dcs/training-ioc-demopvs.git
+    path: demopvs
+    ioc_name: training-demopvs
+    iocBoot_dir: demopvs
 
 # List of IOCs to fetch but not build
 ioc_fetch_list:
