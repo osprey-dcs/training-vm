@@ -1,5 +1,5 @@
 # this assumes root disk device is /dev/sda override on command line if not
-root_disk: sda
+root_disk: vda
 root_partition: "{{ ansible_facts.mounts | json_query('[?mount == `/`].device') | first }}"
 root_fs_type: "{{ ansible_facts.mounts | json_query('[?mount == `/`].fstype') | first }}"
 partitions: "{{ ansible_facts.devices[root_disk].partitions.keys() | list | sort }}"
