@@ -16,6 +16,6 @@ mvn_home: "/opt/epics-tools/lib/apache-maven"
 
 epics_services_account: root
 
-archiver_host: epics-services-tst
-archiver_retrieval_port: 13168
+archiver_host: localhost
+archiver_retrieval_port: 17665
 
