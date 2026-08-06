@@ -33,9 +33,9 @@
         WantedBy=default.target
 
 - name: Enable elasticsearch container
+  become: true
   ansible.builtin.systemd:
     name: elasticsearch
     daemon-reload: true
     state: started
     enabled: true
-    scope: user
