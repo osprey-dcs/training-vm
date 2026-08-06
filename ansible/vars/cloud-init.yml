@@ -15,7 +15,7 @@ m_base: true
 #m_areadetector: true
 
 #catrust: false
-#phoebus: true
+phoebus: true
 #oac_tree: true
 archiver_appliance: true
 #docker: true
