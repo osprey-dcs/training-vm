@@ -11,6 +11,10 @@
     path: "/tmp/archappl"
     state: directory
 
+- name: show archiver version
+  ansible.builtin.debug:
+    var: archiver_appliance_version
+
 - name: Download Archiver-Appliance
   ansible.builtin.unarchive:
     src: "https://github.com/archiver-appliance/epicsarchiverap/releases/download/{{ archiver_appliance_version }}/default-package.zip"
