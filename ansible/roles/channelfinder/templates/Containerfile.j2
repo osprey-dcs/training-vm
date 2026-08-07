@@ -1,0 +1,30 @@
+
+FROM docker.io/library/maven:3-eclipse-temurin-17
+MAINTAINER mdavidsaver@gmail.com
+
+ARG branch=ChannelFinder-{{ channelfinder_version }}
+ENV branch=${branch}
+
+LABEL channelfinder.branch=${branch}
+
+RUN install -d /usr/share/channelfinder \
+ && install -d -o epics-dev -g epics-dev /persist \
+ && git clone --branch ${branch} --depth 1 https://github.com/ChannelFinder/ChannelFinderService /tmp/cf \
+ && (cd /tmp/cf && mvn install && ls target) \
+ && install -d /usr/share/channelfinder \
+ && cp /tmp/cf/target/ChannelFinder*.jar /usr/share/channelfinder/ChannelFinder.jar \
+ && cp /tmp/cf/src/main/resources/application.properties \
+       /tmp/cf/src/main/resources/cf.ldif \
+       /usr/share/channelfinder/ \
+ && rm -rf /tmp/cf /root/.m2
+
+ADD entry-point.sh /usr/share/channelfinder/entry-point.sh
+
+EXPOSE 8080 8443
+
+# spring.ldap.embedded.port should not be exposed
+#EXPOSE 8389
+
+USER epics-dev
+
+ENTRYPOINT ["/usr/share/channelfinder/entry-point.sh"]
