@@ -34,7 +34,6 @@
     file: remove_elasticsearch.yml
   when: not channelfinder | bool
 
-# TODO: Install channelfinder container
-#- name: Install channelfinder
-#ansible.builtin.include_tasks:
-#file: install_channelfinder.yml
+- name: Install channelfinder
+  ansible.builtin.include_tasks:
+    file: install_channelfinder.yml
