@@ -1,7 +1,7 @@
 --- 
 - name: create channelfinder build directory
   ansible.builtin.file:
-    name: {{ channelfinder_build_dir }}
+    name: "{{ channelfinder_build_dir }}"
     state: directory
 
 - name: install Containerfile
@@ -21,6 +21,8 @@
       network.host: "127.0.0.1"
       bootstrap.memory_lock: "true"
     network: host
+    set_working_directory: "{{ channelfinder_build_dir }}"
+    quadlet_filename: channelfinder
     quadlet_options:
       - |
         [Install]
