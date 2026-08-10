@@ -161,7 +161,14 @@ instance-id: i-$(date +%s)
 local-hostname: ${FLAVOR}
 EOF
 
-cloud-localds "$SEED_ISO" "$WORK_DIR/user-data" "$WORK_DIR/meta-data"
+echo "Creating seed ISO"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # Use the MacOS version shipped with this repo
+    ./cloud-localds "$SEED_ISO" "$WORK_DIR/user-data" "$WORK_DIR/meta-data"
+else
+    # Use the package installed version
+    cloud-localds "$SEED_ISO" "$WORK_DIR/user-data" "$WORK_DIR/meta-data"
+fi
 
 # Pick the emulator, machine type, CPU model and (on aarch64) UEFI firmware
 # that match the target architecture.
@@ -177,7 +184,7 @@ echo "Launching QEMU for provisioning of a $ARCH guest (this may take a while)..
     -drive file="$OUTPUT_QCOW2",if=virtio \
     -drive file="$SEED_ISO",format=raw,if=virtio \
     -nographic \
-    -net nic,model=virtio -net user
+    -nic user,id=NAT,model=virtio-net-pci
 
 echo "Provisioning finished. Cleaning up..."
 
