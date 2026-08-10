@@ -36,6 +36,8 @@ _find_aarch64_firmware() {
         "/usr/share/edk2/aarch64/QEMU_EFI-pflash.raw:/usr/share/edk2/aarch64/vars-template-pflash.raw" \
         "/usr/share/edk2/aarch64/QEMU_CODE.fd:/usr/share/edk2/aarch64/QEMU_VARS.fd" \
         "/usr/share/qemu-efi-aarch64/QEMU_EFI.fd:/usr/share/AAVMF/AAVMF_VARS.fd" \
+        "/opt/homebrew/Cellar/qemu/11.0.3/bin/../share/qemu/edk2-aarch64-code.fd:/opt/homebrew/Cellar/qemu/11.0.3/bin/../share/qemu/edk2-arm-vars.fd" \
+        # TODO: Add query for homebrew location (remove hard coding)
     ; do
         code=${pair%%:*}
         vars=${pair##*:}
@@ -62,13 +64,18 @@ qemu_setup() {
 
     if [ "$target" = "$host" ]; then
         # Native: let KVM accelerate, and expose the real CPU to the guest.
-        accel="kvm:tcg"
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            accel="hvf:tcg"
+        else
+            accel="kvm:tcg"
+        fi
         cpu="host"
         # accel=kvm:tcg silently falls back to emulation when KVM is missing,
         # which turns "native and fast" into "10x slower" with no visible
         # cause - most often a nested-virtualization-less cloud VM. Say so.
-        if [ ! -e /dev/kvm ] || [ ! -w /dev/kvm ]; then
-            cat >&2 <<EOF
+        if [[ "$OSTYPE" != "darwin"* ]]; then
+            if [ ! -e /dev/kvm ] || [ ! -w /dev/kvm ]; then
+                cat >&2 <<EOF
 WARNING: /dev/kvm is not available/writable, so this native $target run cannot
          use KVM and QEMU will fall back to emulation (TCG) - roughly an order
          of magnitude slower. Expect build timeouts. Check that hardware
@@ -76,6 +83,7 @@ WARNING: /dev/kvm is not available/writable, so this native $target run cannot
          that many cloud VMs (including GitHub's arm64 hosted runners) do not
          expose /dev/kvm at all.
 EOF
+            fi
         fi
     else
         # Cross-architecture: KVM can never apply, and -cpu host is invalid
