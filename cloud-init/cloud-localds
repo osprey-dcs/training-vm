@@ -171,14 +171,11 @@ esac
 [ "$interfaces" = "_unset" -o -r "$interfaces" ] ||
 	fail "$interfaces: not a readable file"
 
-echo "creating TEMP_D"
 TEMP_D=$(mktemp -d "${TMPDIR:-/tmp}/${0##*/}.XXXXXX") ||
 	fail "failed to make tempdir"
 trap cleanup EXIT
 
 
-echo "copying data files"
-echo "metadata = $metadata"
 files=( "${TEMP_D}/user-data" "${TEMP_D}/meta-data" )
 if [ -n "$metadata" ]; then
 	cp "$metadata" "$TEMP_D/meta-data" || fail "$metadata: failed to copy"
