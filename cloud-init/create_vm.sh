@@ -120,7 +120,7 @@ sed -e "s|TRAINING_VM_REPO=.*|TRAINING_VM_REPO=\"$REPO_URL\"|" \
     -e "s|INSTALL_GRAPHICS=.*|INSTALL_GRAPHICS=\"$INSTALL_GRAPHICS\"|" \
     -e "s|SET_CATRUST=.*|SET_CATRUST=\"$SET_CATRUST\"|" \
     -e "s|INSTALL_TEST_HOOK=.*|INSTALL_TEST_HOOK=\"$INSTALL_TEST_HOOK\"|" \
-    provisioning.sh > "$WORK_DIR/provisioning.sh.tmp"
+    "$SCRIPT_DIR"/provisioning.sh > "$WORK_DIR/provisioning.sh.tmp"
 
 # We need to embed the script into user-data
 cat <<EOF > "$WORK_DIR/user-data"
