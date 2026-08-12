@@ -28,6 +28,7 @@ host_arch() {
 # aarch64 guests have no BIOS - they can only boot via UEFI, so this is
 # required, unlike on x86_64 where QEMU's built-in SeaBIOS is enough.
 # Echoes "<code_path>:<vars_template_path>".
+# TODO: Add query for homebrew location (remove hard coding)
 _find_aarch64_firmware() {
     local pair code vars
     for pair in \
@@ -37,7 +38,6 @@ _find_aarch64_firmware() {
         "/usr/share/edk2/aarch64/QEMU_CODE.fd:/usr/share/edk2/aarch64/QEMU_VARS.fd" \
         "/usr/share/qemu-efi-aarch64/QEMU_EFI.fd:/usr/share/AAVMF/AAVMF_VARS.fd" \
         "/opt/homebrew/Cellar/qemu/11.0.3/bin/../share/qemu/edk2-aarch64-code.fd:/opt/homebrew/Cellar/qemu/11.0.3/bin/../share/qemu/edk2-arm-vars.fd" \
-        # TODO: Add query for homebrew location (remove hard coding)
     ; do
         code=${pair%%:*}
         vars=${pair##*:}
