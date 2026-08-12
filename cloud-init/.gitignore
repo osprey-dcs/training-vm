@@ -1,3 +1,6 @@
 # additional ignored files for cloud-init
 /cache
 /VMs
+network-config
+seed.img
+vendor-data
