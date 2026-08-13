@@ -44,7 +44,7 @@ In VirtualBox:
 ## aarch64
 
 ### Provision VM
-sudo ./create_vm.sh -f debian -j 2 -g -r https://github.com/osprey-dcs-training-vm.git -b cloud-init
+sudo ./create_vm.sh -f debian -j 2 -g -r https://github.com/osprey-dcs/training-vm.git -b cloud-init
 
 ### Run VM using qemu
 
