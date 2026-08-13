@@ -65,7 +65,8 @@
           - "@{{ initial_setup_gnome_group }}"
         allowerasing: true
         install_weak_deps: false
-      when: install_graphics | bool
+          #when: install_graphics | bool
+      when: false
 
     - name: RPM clean cache
       ansible.builtin.command: dnf clean all
