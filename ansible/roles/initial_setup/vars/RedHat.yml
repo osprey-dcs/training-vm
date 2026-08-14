@@ -1,3 +1,5 @@
 ---
-initial_setup_gnome_group: "Server with GUI"
+initial_setup_gnome_group: 
+  - "GNOME"
+  - "Workstation product core"
 initial_setup_devel_group: "Development Tools"

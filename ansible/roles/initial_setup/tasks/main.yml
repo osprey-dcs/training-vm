@@ -62,10 +62,11 @@
     - name: RPM Install Gnome
       ansible.builtin.dnf:
         name:
-          - "@{{ initial_setup_gnome_group }}"
+          - "@{{ item }}"
         allowerasing: true
         install_weak_deps: false
       when: install_graphics | bool
+      loop: "{{ initial_setup_gnome_group }}"
 
     - name: RPM clean cache
       ansible.builtin.command: dnf clean all
