@@ -1,0 +1,33 @@
+# User specific configuration
+# In this case, a small default that works fast and on all flavours
+
+# Replace this file with a copy of the local.yml.sample then change it!
+
+# OR
+
+# Create your own setup file, e.g., myVM.yml
+# and specify it on the ansible-playbook command line:
+# ansible-playbook ... playbook.yml -e @vars/myVM.yml
+
+m_base: true
+<<<<<<< HEAD
+=======
+#m_calc: true
+#m_sscan: true
+#m_busy: true
+#m_p4p: true
+#m_pvaPy: true
+#m_seq: true
+#m_opcua: true
+#m_stream: true
+#m_areadetector: true
+
+#catrust: false
+#phoebus: true
+#oac_tree: true
+#archiver_appliance: true
+#docker: true
+#bluesky: true
+#iocs: true
+#channelfinder: true
+>>>>>>> 43e3f36 (Make standard cloud-init file simple)
