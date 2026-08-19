@@ -23,7 +23,7 @@ SET_CATRUST="false"
 INSTALL_TEST_HOOK="false"
 
 usage() {
-    echo "Usage: $0 -f <flavor> [-a <arch>] [-j <cpus>] [-c <ca_cert>] [-g] [-r <repo_url>] [-b <branch>] [-T]"
+    echo "Usage: $0 -f <flavor> [-a <arch>] [-j <cpus>] [-c <ca_cert>] [-g] [-r <repo_url>] [-b <branch>] [-T] [-V <vars_file>]"
     echo "  -f: flavor (fedora, rocky, debian, ubuntu)"
     echo "  -a: target architecture: x86_64 (amd64) or aarch64 (arm64)"
     echo "      (default: this host's architecture, currently $(host_arch))"
@@ -36,11 +36,11 @@ usage() {
     echo "  -s: repository commit sha to check out after cloning (default: branch tip)"
     echo "  -T: authorize the CI test SSH key for epics-dev (used by run_ansible_test.sh;"
     echo "      do not use for images meant for distribution)"
-    echo "  -V: Ansible variable file name (default: local.yml)
+    echo "  -V: Ansible variable file name (default: local.yml)"
     exit 1
 }
 
-while getopts "f:a:j:c:gr:b:s:T:V" opt; do
+while getopts "f:a:j:c:gr:b:s:T:V:" opt; do
     case $opt in
         f) FLAVOR=$OPTARG ;;
         a) ARCH=$OPTARG ;;
@@ -121,6 +121,7 @@ sed -e "s|TRAINING_VM_REPO=.*|TRAINING_VM_REPO=\"$REPO_URL\"|" \
     -e "s|TRAINING_VM_BRANCH=.*|TRAINING_VM_BRANCH=\"$REPO_BRANCH\"|" \
     -e "s|TRAINING_VM_SHA=.*|TRAINING_VM_SHA=\"$REPO_SHA\"|" \
     -e "s|INSTALL_GRAPHICS=.*|INSTALL_GRAPHICS=\"$INSTALL_GRAPHICS\"|" \
+    -e "s|VARS_FILE=.*|VARS_FILE=\"$VARS_FILE\"|" \
     -e "s|SET_CATRUST=.*|SET_CATRUST=\"$SET_CATRUST\"|" \
     -e "s|INSTALL_TEST_HOOK=.*|INSTALL_TEST_HOOK=\"$INSTALL_TEST_HOOK\"|" \
     "$SCRIPT_DIR"/provisioning.sh > "$WORK_DIR/provisioning.sh.tmp"
