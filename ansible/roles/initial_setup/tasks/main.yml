@@ -143,3 +143,13 @@
       register: firewalld_service_disable
       failed_when: "firewalld_service_disable|failed and ('Could not find the requested service' not in firewalld_service_disable.msg)"
       ignore_errors: true
+
+- name: Enable DHCP
+  when: ansible_facts['os_family'] == 'Debian'
+  become: true
+  ansible.builtin.copy:
+    src: files/dhcp.network
+    dest: /etc/systemd/network/dhcp.network
+    mode: '0644'
+    owner: root
+    group: root
