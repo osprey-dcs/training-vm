@@ -14,6 +14,7 @@ TRAINING_VM_SHA="WILL BE SET BY create_vm.sh"
 INSTALL_GRAPHICS="WILL BE SET BY create_vm.sh"
 SET_CATRUST="WILL BE SET BY create_vm.sh"
 INSTALL_TEST_HOOK="WILL BE SET BY create_vm.sh"
+VARS_FILE="WILL BE SET BY create_vm.sh"
 
 # Can be set through environment
 ANSIBLE_ARGS="${ANSIBLE_ARGS:-}"
@@ -59,7 +60,7 @@ ansible-galaxy install -r requirements.yml || true
 # Run the playbook
 # We pass install_graphics and initial_setup=true
 ansible-playbook playbook.yml \
-    -e @vars/local.yml \
+    -e @vars/$VARS_FILE \
     -e "initial_setup=true" \
     -e "install_graphics=$INSTALL_GRAPHICS" \
     -e "catrust=$SET_CATRUST" \
