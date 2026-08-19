@@ -65,7 +65,7 @@
           - "@{{ item }}"
         allowerasing: true
         install_weak_deps: false
-      when: install_graphics | bool and ansible_facts['ansible_architecture'] == "x86_64"
+      when: install_graphics | bool and ansible_facts['architecture'] == "x86_64"
       loop: "{{ initial_setup_gnome_group_aarch64 }}"
 
     - name: RPM Install Gnome - aarch64
@@ -74,7 +74,7 @@
           - "@{{ item }}"
         allowerasing: true
         install_weak_deps: false
-      when: install_graphics | bool and ansible_facts['ansible_architecture'] == "aarch64"
+      when: install_graphics | bool and ansible_facts['architecture'] == "aarch64"
       loop: "{{ initial_setup_gnome_group_aarch64 }}"
 
     - name: RPM clean cache
