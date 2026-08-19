@@ -11,6 +11,7 @@ source "$SCRIPT_DIR/qemu_arch.sh"
 FLAVOR=""
 ARCH=""
 INSTALL_GRAPHICS="false"
+VARS_FILE="local.yml"
 REPO_URL="https://github.com/epics-training/training-vm.git"
 REPO_BRANCH="main"
 REPO_SHA=""
@@ -35,10 +36,11 @@ usage() {
     echo "  -s: repository commit sha to check out after cloning (default: branch tip)"
     echo "  -T: authorize the CI test SSH key for epics-dev (used by run_ansible_test.sh;"
     echo "      do not use for images meant for distribution)"
+    echo "  -V: Ansible variable file name (default: local.yml)
     exit 1
 }
 
-while getopts "f:a:j:c:gr:b:s:T" opt; do
+while getopts "f:a:j:c:gr:b:s:T:V" opt; do
     case $opt in
         f) FLAVOR=$OPTARG ;;
         a) ARCH=$OPTARG ;;
@@ -54,6 +56,7 @@ while getopts "f:a:j:c:gr:b:s:T" opt; do
         b) REPO_BRANCH=$OPTARG ;;
         s) REPO_SHA=$OPTARG ;;
         T) INSTALL_TEST_HOOK="true" ;;
+        V) VARS_FILE=$OPTARG ;;
         *) usage ;;
     esac
 done
