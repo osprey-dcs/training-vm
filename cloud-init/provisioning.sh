@@ -60,7 +60,7 @@ ansible-galaxy install -r requirements.yml || true
 # Run the playbook
 # We pass install_graphics and initial_setup=true
 ansible-playbook playbook.yml \
-    -e @vars/$VARS_FILE \
+    -e "@vars/$VARS_FILE" \
     -e "initial_setup=true" \
     -e "install_graphics=$INSTALL_GRAPHICS" \
     -e "catrust=$SET_CATRUST" \
