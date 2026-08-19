@@ -1,5 +1,7 @@
 ---
-initial_setup_gnome_group: 
+initial_setup_gnome_group_x86_64: 
+  - "Workstation"
+initial_setup_gnome_group_aarch64: 
   - "GNOME"
   - "Workstation product core"
 initial_setup_devel_group: "Development Tools"

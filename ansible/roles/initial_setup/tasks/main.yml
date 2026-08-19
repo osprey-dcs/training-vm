@@ -59,14 +59,23 @@
         allowerasing: true # fix version conflicts for curl and coreutils on Rocky
         install_weak_deps: false
 
-    - name: RPM Install Gnome
+    - name: RPM Install Gnome - x86_64
       ansible.builtin.dnf:
         name:
           - "@{{ item }}"
         allowerasing: true
         install_weak_deps: false
-      when: install_graphics | bool
-      loop: "{{ initial_setup_gnome_group }}"
+      when: install_graphics | bool and ansible_facts['ansible_architecture'] == "x86_64"
+      loop: "{{ initial_setup_gnome_group_aarch64 }}"
+
+    - name: RPM Install Gnome - aarch64
+      ansible.builtin.dnf:
+        name:
+          - "@{{ item }}"
+        allowerasing: true
+        install_weak_deps: false
+      when: install_graphics | bool and ansible_facts['ansible_architecture'] == "aarch64"
+      loop: "{{ initial_setup_gnome_group_aarch64 }}"
 
     - name: RPM clean cache
       ansible.builtin.command: dnf clean all
