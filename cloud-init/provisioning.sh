@@ -94,7 +94,7 @@ fi
 rm -fr /opt/vm-setup
 
 # Optionally install the training collection
-if [[ "INSTALL_COLLECTION" == "true" ]]; then
+if [[ "$INSTALL_COLLECTION" == "true" ]]; then
     git clone -b "$COLLECTION_REPO_BRANCH" "$COLLECTION_REPO_URL" /home/epics-dev/training
     cd /home/epics-dev/training/vm-setup
     ./update.sh ..
