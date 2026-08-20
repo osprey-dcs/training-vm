@@ -95,8 +95,9 @@ rm -fr /opt/vm-setup
 
 # Optionally install the training collection
 if [[ "$INSTALL_COLLECTION" == "true" ]]; then
-    install -d -m 700 -o epics-dev -g epics-dev /home/epics-dev/training
+    install -d -m 700 -o epics-dev -g epics-dev /home/epics-dev
     cd /home/epics-dev
+    pwd
     git clone -b "$COLLECTION_REPO_BRANCH" "$COLLECTION_REPO_URL" /home/epics-dev/training
     cd /home/epics-dev/training
     git submodule init
