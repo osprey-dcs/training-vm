@@ -21,9 +21,13 @@ CPUS="4"
 CA_CERT=""
 SET_CATRUST="false"
 INSTALL_TEST_HOOK="false"
+INSTALL_COLLECTION="false"
+COLLECTION_URL="https://github.com/epics-training/training-collection.git"
+COLLECTION_BRANCH="main"
+KEEP_ISO="false"
 
 usage() {
-    echo "Usage: $0 -f <flavor> [-a <arch>] [-j <cpus>] [-c <ca_cert>] [-g] [-r <repo_url>] [-b <branch>] [-T] [-V <vars_file>]"
+    echo "Usage: $0 -f <flavor> [-a <arch>] [-j <cpus>] [-c <ca_cert>] [-g] [-r <repo_url>] [-b <branch>] [-T] [-V <vars_file>] [-i] [-R <collection_repo_url>] [-B <collection_branch>] [-k]"
     echo "  -f: flavor (fedora, rocky, debian, ubuntu)"
     echo "  -a: target architecture: x86_64 (amd64) or aarch64 (arm64)"
     echo "      (default: this host's architecture, currently $(host_arch))"
@@ -36,11 +40,15 @@ usage() {
     echo "  -s: repository commit sha to check out after cloning (default: branch tip)"
     echo "  -T: authorize the CI test SSH key for epics-dev (used by run_ansible_test.sh;"
     echo "      do not use for images meant for distribution)"
-    echo "  -V: Ansible variable file name (default: local.yml)"
+    echo "  -V: Ansible variable file name (default: $VARS_FILE)"
+    echo "  -i: install collection repo (default: false)"
+    echo "  -R: collection repo URL (default: $COLLECTION_URL)"
+    echo "  -B: collection repo branch (default: $COLLECTION_BRANCH)"
+    echo "  -k: keep generated seed ISO image (default: false)"
     exit 1
 }
 
-while getopts "f:a:j:c:gr:b:s:T:V:" opt; do
+while getopts "f:a:j:c:gr:b:s:T:V:iR:B:k" opt; do
     case $opt in
         f) FLAVOR=$OPTARG ;;
         a) ARCH=$OPTARG ;;
@@ -57,6 +65,10 @@ while getopts "f:a:j:c:gr:b:s:T:V:" opt; do
         s) REPO_SHA=$OPTARG ;;
         T) INSTALL_TEST_HOOK="true" ;;
         V) VARS_FILE=$OPTARG ;;
+        i) INSTALL_COLLECTION="true" ;;
+        R) COLLECTION_URL=$OPTARG ;;
+        B) COLLECTION_BRANCH=$OPTARG ;;
+        k) KEEP_ISO="true" ;;
         *) usage ;;
     esac
 done
@@ -124,6 +136,9 @@ sed -e "s|TRAINING_VM_REPO=.*|TRAINING_VM_REPO=\"$REPO_URL\"|" \
     -e "s|VARS_FILE=.*|VARS_FILE=\"$VARS_FILE\"|" \
     -e "s|SET_CATRUST=.*|SET_CATRUST=\"$SET_CATRUST\"|" \
     -e "s|INSTALL_TEST_HOOK=.*|INSTALL_TEST_HOOK=\"$INSTALL_TEST_HOOK\"|" \
+    -e "s|INSTALL_COLLECTION=.*|INSTALL_COLLECTION=\"$INSTALL_COLLECTION\"|" \
+    -e "s|COLLECTION_URL=.*|COLLECTION_URL=\"$COLLECTION_URL\"|" \
+    -e "s|COLLECTION_BRANCH=.*|COLLECTION_BRANCH=\"$COLLECTION_BRANCH\"|" \
     "$SCRIPT_DIR"/provisioning.sh > "$WORK_DIR/provisioning.sh.tmp"
 
 # We need to embed the script into user-data
@@ -172,6 +187,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 else
     # Use the package installed version
     cloud-localds "$SEED_ISO" "$WORK_DIR/user-data" "$WORK_DIR/meta-data"
+fi
+
+# Copy ISO image to 
+if [[ "$KEEP_ISO" ]]; then
+    cp "$SEED_ISO" "$SCRIPT_DIR"
 fi
 
 # Pick the emulator, machine type, CPU model and (on aarch64) UEFI firmware

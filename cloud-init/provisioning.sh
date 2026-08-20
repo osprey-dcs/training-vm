@@ -15,6 +15,9 @@ INSTALL_GRAPHICS="WILL BE SET BY create_vm.sh"
 SET_CATRUST="WILL BE SET BY create_vm.sh"
 INSTALL_TEST_HOOK="WILL BE SET BY create_vm.sh"
 VARS_FILE="WILL BE SET BY create_vm.sh"
+INSTALL_COLLECTION="WILL BE SET BY create_vm.sh"
+COLLECTION_REPO="WILL BE SET BY create_vm.sh"
+COLLECTION_BRANCH="WILL BE SET BY create_vm.sh"
 
 # Can be set through environment
 ANSIBLE_ARGS="${ANSIBLE_ARGS:-}"
@@ -89,6 +92,15 @@ fi
 
 # Remove the cloned training-vm repo
 rm -fr /opt/vm-setup
+
+# Optionally install the training collection
+if [[ "INSTALL_COLLECTION" == "true" ]]; then
+    git clone -b "$COLLECTION_BRANCH" "$COLLECTION_REPO" /home/epics-dev/training
+    cd /home/epics-dev/training/vm-setup
+    ./update.sh ..
+    cd /home/epics-dev
+    chown -R epics-dev:epics-dev training
+fi
 
 # Signal completion. The EXIT trap above handles the actual shutdown.
 # We use a flag file that the host can poll for if needed.
