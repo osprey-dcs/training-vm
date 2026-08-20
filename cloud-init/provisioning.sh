@@ -103,7 +103,7 @@ if [[ "$INSTALL_COLLECTION" == "true" ]]; then
     git submodule init
     git submodule update
     cd /home/epics-dev/training/vm-setup
-    sudo --other-user=epics-dev ./update.sh ..
+    sudo --user=epics-dev ./update.sh ..
     cd /home/epics-dev
     chown -R epics-dev:epics-dev training
 fi
