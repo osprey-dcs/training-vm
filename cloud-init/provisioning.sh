@@ -16,8 +16,8 @@ SET_CATRUST="WILL BE SET BY create_vm.sh"
 INSTALL_TEST_HOOK="WILL BE SET BY create_vm.sh"
 VARS_FILE="WILL BE SET BY create_vm.sh"
 INSTALL_COLLECTION="WILL BE SET BY create_vm.sh"
-COLLECTION_REPO="WILL BE SET BY create_vm.sh"
-COLLECTION_BRANCH="WILL BE SET BY create_vm.sh"
+COLLECTION_REPO_URL="WILL BE SET BY create_vm.sh"
+COLLECTION_REPO_BRANCH="WILL BE SET BY create_vm.sh"
 
 # Can be set through environment
 ANSIBLE_ARGS="${ANSIBLE_ARGS:-}"
@@ -95,7 +95,7 @@ rm -fr /opt/vm-setup
 
 # Optionally install the training collection
 if [[ "INSTALL_COLLECTION" == "true" ]]; then
-    git clone -b "$COLLECTION_BRANCH" "$COLLECTION_REPO" /home/epics-dev/training
+    git clone -b "$COLLECTION_REPO_BRANCH" "$COLLECTION_REPO_URL" /home/epics-dev/training
     cd /home/epics-dev/training/vm-setup
     ./update.sh ..
     cd /home/epics-dev

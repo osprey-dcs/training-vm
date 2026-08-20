@@ -22,8 +22,8 @@ CA_CERT=""
 SET_CATRUST="false"
 INSTALL_TEST_HOOK="false"
 INSTALL_COLLECTION="false"
-COLLECTION_URL="https://github.com/epics-training/training-collection.git"
-COLLECTION_BRANCH="main"
+COLLECTION_REPO_URL="https://github.com/epics-training/training-collection.git"
+COLLECTION_REPO_BRANCH="main"
 KEEP_ISO="false"
 
 usage() {
@@ -42,8 +42,8 @@ usage() {
     echo "      do not use for images meant for distribution)"
     echo "  -V: Ansible variable file name (default: $VARS_FILE)"
     echo "  -i: install collection repo (default: false)"
-    echo "  -R: collection repo URL (default: $COLLECTION_URL)"
-    echo "  -B: collection repo branch (default: $COLLECTION_BRANCH)"
+    echo "  -R: collection repo URL (default: $COLLECTION_REPO_URL)"
+    echo "  -B: collection repo branch (default: $COLLECTION_REPO_BRANCH)"
     echo "  -k: keep generated seed ISO image (default: false)"
     exit 1
 }
@@ -66,8 +66,8 @@ while getopts "f:a:j:c:gr:b:s:T:V:iR:B:k" opt; do
         T) INSTALL_TEST_HOOK="true" ;;
         V) VARS_FILE=$OPTARG ;;
         i) INSTALL_COLLECTION="true" ;;
-        R) COLLECTION_URL=$OPTARG ;;
-        B) COLLECTION_BRANCH=$OPTARG ;;
+        R) COLLECTION_REPO_URL=$OPTARG ;;
+        B) COLLECTION_REPO_BRANCH=$OPTARG ;;
         k) KEEP_ISO="true" ;;
         *) usage ;;
     esac
@@ -137,8 +137,8 @@ sed -e "s|TRAINING_VM_REPO=.*|TRAINING_VM_REPO=\"$REPO_URL\"|" \
     -e "s|SET_CATRUST=.*|SET_CATRUST=\"$SET_CATRUST\"|" \
     -e "s|INSTALL_TEST_HOOK=.*|INSTALL_TEST_HOOK=\"$INSTALL_TEST_HOOK\"|" \
     -e "s|INSTALL_COLLECTION=.*|INSTALL_COLLECTION=\"$INSTALL_COLLECTION\"|" \
-    -e "s|COLLECTION_URL=.*|COLLECTION_URL=\"$COLLECTION_URL\"|" \
-    -e "s|COLLECTION_BRANCH=.*|COLLECTION_BRANCH=\"$COLLECTION_BRANCH\"|" \
+    -e "s|COLLECTION_REPO_URL=.*|COLLECTION_REPO_URL=\"$COLLECTION_REPO_URL\"|" \
+    -e "s|COLLECTION_REPO_BRANCH=.*|COLLECTION_REPO_BRANCH=\"$COLLECTION_REPO_BRANCH\"|" \
     "$SCRIPT_DIR"/provisioning.sh > "$WORK_DIR/provisioning.sh.tmp"
 
 # We need to embed the script into user-data
