@@ -1,6 +1,9 @@
 #!/bin/bash
 # update.sh
 
+# abort script on any errors
+set -e
+
 # Update script that tries to pull the training VM to the appropriate latest versions
 
 # Improved robustness:
@@ -43,5 +46,5 @@ if [ ! -e "${collection_dir}/vm-setup/ansible/vars/local.yml" ]; then
 fi
 
 cd ${bootstrap_dir}/ansible
-ansible-galaxy install -r requirements.yml || true
+ansible-galaxy install -r requirements.yml
 ansible-playbook playbook.yml "$@" -e "@vars/local.yml"
