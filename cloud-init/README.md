@@ -14,6 +14,12 @@ cd training-vm
 sudo ./create_vm.sh -f debian -j 2 -g -r https://github.com/osprey-dcs/training-vm.git -b cloud-init
 ```
 
+#### Installing collection repo
+
+```
+sudo ./create_vm.sh -f debian -j 2 -g -r https://github.com/osprey-dcs/training-vm.git -b cloud-init-macos-aarch64 -V cloud-init.yml -i -R https://github.com/osprey-dcs/training-collection.git -B 2026-osprey-ess
+```
+
 `sudo` required to allow access to `kvm`
 
 ### Running VM
