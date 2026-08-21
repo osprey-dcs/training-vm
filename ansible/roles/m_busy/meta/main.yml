@@ -1,3 +1,4 @@
 ---
 dependencies:
   - role: m_base
+  - role: m_asyn
