@@ -97,15 +97,12 @@ rm -fr /opt/vm-setup
 if [[ "$INSTALL_COLLECTION" == "true" ]]; then
     install -d -m 700 -o epics-dev -g epics-dev /home/epics-dev
     cd /home/epics-dev
-    pwd
-    git clone -b "$COLLECTION_REPO_BRANCH" "$COLLECTION_REPO_URL" /home/epics-dev/training
+    sudo --user=epics-dev git clone -b "$COLLECTION_REPO_BRANCH" "$COLLECTION_REPO_URL" /home/epics-dev/training
     cd /home/epics-dev/training
-    git submodule init
-    git submodule update
+    sudo --user=epics-dev git submodule init
+    sudo --user=epics-dev git submodule update
     cd /home/epics-dev/training/vm-setup
     sudo --user=epics-dev ./update.sh ..
-    cd /home/epics-dev
-    chown -R epics-dev:epics-dev training
 fi
 
 # Signal completion. The EXIT trap above handles the actual shutdown.
