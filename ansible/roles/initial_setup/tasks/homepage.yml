@@ -70,12 +70,19 @@
     group: "{{ dev_user }}"
     mode: "0755"
 
+# TODO: Work out why we cannot make the desktop launcher trusted
+# Keepting this for now to show the steps we tried.
 - name: install dbus-launch
   become: true
   ansible.builtin.apt:
     name: dbus-x11
     state: present
 
+# Testing if running twice works
+- name: make the vm homepage launcher trusted
+  ansible.builtin.command:
+    cmd: dbus-launch gio set /home/{{ dev_user }}/Desktop/training-vm-homepage.desktop "metadata::trusted" true
+    
 - name: make the vm homepage launcher trusted
   ansible.builtin.command:
     cmd: dbus-launch gio set /home/{{ dev_user }}/Desktop/training-vm-homepage.desktop "metadata::trusted" true
