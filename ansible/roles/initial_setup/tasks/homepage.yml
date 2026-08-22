@@ -70,6 +70,10 @@
     group: "{{ dev_user }}"
     mode: "0755"
 
+- name: make the vm homepage launcher trusted
+  ansible.builtin.command:
+    cmd: dbus-launch gio set /home/{{ dev_user }}/Desktop/training-vm-homepage.desktop "metadata::trusted" true
+    
 # GNOME Shell has shown no desktop icons at all since 3.28 without this
 # extension. Fedora/Ubuntu enable it by default; Rocky/Debian's GNOME task
 # groups may not include or enable it, so do both explicitly here too -
