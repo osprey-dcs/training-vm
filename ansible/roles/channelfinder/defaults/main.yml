@@ -5,3 +5,8 @@ elasticsearch_directory: "/opt/channelfinder/esdata"
 channelfinder_version: "4.7.3"
 channelfinder_build_dir: "/tmp/channelfinder"
 
+# --- Training-VM homepage link ---
+elasticsearch_homepage_link_title: "Elasticsearch"
+elasticsearch_homepage_link_url: "http://localhost:9200"
+channelfinder_homepage_link_title: "ChannelFinder"
+channelfinder_homepage_link_url: "http://localhost:8080/ChannelFinder"

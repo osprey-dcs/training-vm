@@ -38,3 +38,10 @@
 - name: Install channelfinder
   ansible.builtin.include_tasks:
     file: install_channelfinder.yml
+  when: channelfinder | bool
+
+- name: create homepage link
+  ansible.builtin.include_tasks:
+    file: add_homepage_link.yml
+  when: install_graphics | bool
+
