@@ -113,8 +113,9 @@
       ansible.builtin.command: dconf update
       changed_when: true
         
+# dconf database was not working on Debian GNOME
+# Use this more brute-force method for now
 - name: Enable the GNOME desktop-icons extension 
-  become: true
   block:
     - name: undo disable of desktop icons
       ansible.builtin.dconf:
