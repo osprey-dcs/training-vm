@@ -33,6 +33,9 @@
           - openssl
         state: present
 
+    # Firefox is not available as a package in default Debian. Use
+    # epiphany-browser instead and create a symlink for the `firefox`
+    # executable
     - name: APT Install Gnome and tools
       ansible.builtin.apt:
         name:
@@ -40,6 +43,13 @@
           - epiphany-browser
           - gnome-shell-extension-manager
         state: present
+      when: install_graphics | bool
+
+    - name: create firefox symlink
+      ansible.builtin.file:
+        src: /usr/bin/epihany-browser
+        dest: /usr/local/bin/firefox
+        state: link
       when: install_graphics | bool
 
 - name: RPM Upgrade all packages; install Dev Tools and Gnome
