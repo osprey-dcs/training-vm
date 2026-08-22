@@ -118,12 +118,12 @@
 - name: Enable the GNOME desktop-icons extension 
   block:
     - name: undo disable of desktop icons
-      ansible.builtin.dconf:
+      community.general.dconf:
         key: "/org/gnome/shell/disabled-extensions"
         state: absent
 
     - name: enable desktop icons
-      ansible.builtin.dconf:
+      community.general.dconf:
         key: "/org/gnome/shell/enabled-extensions"
         value: "['ding@rastersoft.com']"
         state: present
