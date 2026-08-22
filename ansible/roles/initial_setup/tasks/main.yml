@@ -42,6 +42,18 @@
         state: present
       when: install_graphics | bool
 
+    - name: undo disable of desktop icons
+      ansible.builtin.dconf:
+        key: "/org/gnome/shell/disabled-extensions"
+        value: "[]"
+        state: present
+
+    - name: enable desktop icons
+      ansible.builtin.dconf:
+        key: "/org/gnome/shell/enabled-extensions"
+        value: "['ding@rastersoft.com']"
+        state: present
+
 - name: RPM Upgrade all packages; install Dev Tools and Gnome
   when: ansible_facts['os_family'] == 'RedHat'
   become: true
