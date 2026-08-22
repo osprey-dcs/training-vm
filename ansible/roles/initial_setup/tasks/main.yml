@@ -31,11 +31,15 @@
           - curl
           - sudo
           - openssl
+        state: present
 
-    - name: APT Install Gnome
+    - name: APT Install Gnome and tools
       ansible.builtin.apt:
         name:
           - "{{ initial_setup_gnome_group }}"
+          - epiphany-browser
+          - gnome-shell-extension-manager
+        state: present
       when: install_graphics | bool
 
 - name: RPM Upgrade all packages; install Dev Tools and Gnome
