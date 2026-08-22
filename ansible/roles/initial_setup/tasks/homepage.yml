@@ -112,3 +112,18 @@
     - name: Compile the dconf database
       ansible.builtin.command: dconf update
       changed_when: true
+        
+- name: Enable the GNOME desktop-icons extension 
+  become: true
+  block:
+    - name: undo disable of desktop icons
+      ansible.builtin.dconf:
+        key: "/org/gnome/shell/disabled-extensions"
+        state: absent
+
+    - name: enable desktop icons
+      ansible.builtin.dconf:
+        key: "/org/gnome/shell/enabled-extensions"
+        value: "['ding@rastersoft.com']"
+        state: present
+
