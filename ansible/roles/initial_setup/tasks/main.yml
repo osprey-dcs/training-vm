@@ -47,7 +47,7 @@
 
     - name: create firefox symlink
       ansible.builtin.file:
-        src: /usr/bin/epihany-browser
+        src: /usr/bin/epiphany-browser
         dest: /usr/local/bin/firefox
         state: link
       when: install_graphics | bool
