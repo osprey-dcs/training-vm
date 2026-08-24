@@ -34,7 +34,7 @@
       path: "{{ ioc_install_dir }}/{{ item.path }}/iocBoot/ioc{{ item.iocBoot_dir }}/st.cmd"
       regexp: '#!../../bin/linux-x86_64/(.*)'
       backrefs: yes
-      line: '#!../../bin/aarch64/\1'
+      line: '#!../../bin/linux-aarch64/\1'
 
 
   - name: Create log directory 
