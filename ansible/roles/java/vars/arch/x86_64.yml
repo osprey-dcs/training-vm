@@ -1,0 +1,4 @@
+# Java settings
+---
+java_home: "/opt/epics-tools/lib/jvm/jdk-21"
+java_jdk_url: "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.9%2B10/OpenJDK21U-jdk_{{ arch.java }}_linux_hotspot_21.0.9_10.tar.gz"

@@ -1,0 +1,4 @@
+# Java settings
+---
+java_home: "/opt/epics-tools/lib/jvm/jdk-25"
+java_jdk_url: "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.4%2B7/OpenJDK25U-jdk_aarch64_linux_hotspot_25.0.4_7.tar.gz"
