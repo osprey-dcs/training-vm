@@ -17,6 +17,7 @@
     ansible.builtin.git:
       repo: "{{ item.url }}"
       dest: "{{ ioc_install_dir }}/{{ item.path }}"
+      force: true
 
   - name: Build {{ item.name }} IOC
     become_user: "{{ epics_run_user }}"
