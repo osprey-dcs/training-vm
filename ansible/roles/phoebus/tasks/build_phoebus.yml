@@ -18,7 +18,15 @@
     JAVA_HOME: "{{ java_home }}"
     MVN_HOME: "{{ mvn_home }}"
     PATH: "{{ java_home }}/bin:{{ mvn_home }}/bin:{{ ansible_env.PATH }}"
-  when: phoebus_repo.changed | bool
+  when: phoebus_repo.changed | bool and ansible_facts['architecture'] != "aarch64"
+
+- name: Update the Phoebus dependencies - aarch64 only
+  become: true
+  ansible.builtin.lineinfile:
+    path: /opt/epics-tools/lib/phoebus/pom.xml
+    search_string: '<openjfx.version>'
+    line: '<openjfx.version>25.0.4</openjfx.version>'
+  when: ansible_facts['architecture'] == "aarch64"
 
 - name: Build the common phoebus binaries (this may take a while)
   command: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true
