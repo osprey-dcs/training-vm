@@ -1,15 +1,15 @@
 # Install Java
 ---
+- name: include variables for architecture-specific items
+  ansible.builtin.include_vars:
+    dir: vars/arch
+    files_matching: "{{ ansible_facts['architecture'] }}.yml"
+
 - name: Ensure java_home directory exists
   become: true
   file:
     path: "{{ java_home }}"
     state: directory
-
-- name: include variables for architecture-specific items
-  ansible.builtin.include_vars:
-    dir: vars/arch
-    files_matching: "{{ ansible_facts['architecture'] }}.yml"
 
 - name: Install open jdk 21
   become: true
