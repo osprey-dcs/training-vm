@@ -44,7 +44,14 @@ In VirtualBox:
 ## aarch64
 
 ### Provision VM
+
+#### Basic invocation
+
 sudo ./create_vm.sh -f debian -j 2 -g -r https://github.com/osprey-dcs/training-vm.git -b cloud-init-macos-aarch64
+
+#### Keep seed.iso, and install training collection
+
+sudo ./create_vm.sh -f debian -j 2 -g -r https://github.com/osprey-dcs/training-vm.git -b cloud-init-macos-aarch64 -V cloud-init.yml -k -i -R https://github.com/osprey-dcs/training-collection.git -B 2026-osprey-ess
 
 ### Run VM using qemu
 
