@@ -26,6 +26,17 @@
       cmd: make
       chdir: "{{ ioc_install_dir }}/{{ item.path }}"
 
+  - name: set architecture (to aarch64 if required)
+    become_user: "{{ epics_run_user }}"
+    vars:
+      ansible_remote_tmp: "{{ epics_run_user_tmp }}"
+    ansible.builtin.lineinfile:
+      path: "{{ ioc_install_dir }}/{{ item.path }}/iocBoot/{{ item.iocBoot_dir }}/st.cmd"
+      regexp: '#!../../bin/linux-x86_64/(.*)'
+      backrefs: yes
+      line: '#!../../bin/aarch64/\1'
+
+
   - name: Create log directory 
     become_user: root
     ansible.builtin.file:
