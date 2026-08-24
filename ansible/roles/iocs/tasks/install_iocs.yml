@@ -31,7 +31,7 @@
     vars:
       ansible_remote_tmp: "{{ epics_run_user_tmp }}"
     ansible.builtin.lineinfile:
-      path: "{{ ioc_install_dir }}/{{ item.path }}/iocBoot/{{ item.iocBoot_dir }}/st.cmd"
+      path: "{{ ioc_install_dir }}/{{ item.path }}/iocBoot/ioc{{ item.iocBoot_dir }}/st.cmd"
       regexp: '#!../../bin/linux-x86_64/(.*)'
       backrefs: yes
       line: '#!../../bin/aarch64/\1'
