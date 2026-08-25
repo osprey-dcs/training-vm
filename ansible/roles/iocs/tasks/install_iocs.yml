@@ -36,7 +36,7 @@
       regexp: '#!../../bin/linux-x86_64/(.*)'
       backrefs: yes
       line: '#!../../bin/linux-aarch64/\1'
-
+    when: ansible_facts['architecture'] == "aarch64"
 
   - name: Create log directory 
     become_user: root
