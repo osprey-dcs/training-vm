@@ -84,7 +84,7 @@
   become: true
   ansible.builtin.shell:
     cmd: "mariadb -u archappl --password=archappl archappl < {{ tomcat_home }}/webapps/mgmt/install/archappl_mysql.sql"
-  when: "tables.rowcount == 0"
+  when: tables.rowcount[0] == 0
 
 - name: Create Archiver Appliance systemd service
   become: true
