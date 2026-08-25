@@ -81,6 +81,7 @@
   register: tables
 
 - name: Run the Archiver-Appliance's MariaDB install script
+  become: true
   ansible.builtin.shell:
     cmd: "mariadb -u archappl --password=archappl archappl < {{ tomcat_home }}/webapps/mgmt/install/archappl_mysql.sql"
   when: "tables.rowcount == 0"
