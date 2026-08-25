@@ -51,6 +51,16 @@
     group: "{{ epics_run_user }}"
     mode: 0755
 
+# Create OPI top-level directory
+- name: Create OPI top-level directory
+  become: true
+  ansible.builtin.file:
+    path: "{{ opi_install_dir }}"
+    state: directory
+    owner: "{{ epics_run_user }}"
+    group: "{{ epics_run_user }}"
+    mode: 0755
+
 # Install and build IOCs
 - name: Install and build IOCs
   include_tasks: install_iocs.yml
@@ -62,3 +72,11 @@
   include_tasks: fetch_iocs.yml
   when: iocs is defined and iocs | bool
   loop: "{{ ioc_fetch_list }}"
+
+# Install OPIs
+- name: Install OPIs
+  include_tasks: install_opis.yml
+  when: iocs is defined and iocs | bool
+  loop: "{{ opi_list }}"
+
+

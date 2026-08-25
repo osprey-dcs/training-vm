@@ -1,0 +1,20 @@
+---
+- name: check if the URL is valid
+  ignore_errors: true
+  ansible.builtin.uri:
+    url: "{{ item.url }}"
+  register: result
+
+- name: Run IOC installation tasks
+  become: true
+  when: "result.status == 200"
+  block:
+
+  - name: Install {{ item.name }} OPI
+    become_user: "{{ epics_run_user }}"
+    vars:
+      ansible_remote_tmp: "{{ epics_run_user_tmp }}"
+    ansible.builtin.git:
+      repo: "{{ item.url }}"
+      dest: "{{ opi_install_dir }}/{{ item.path }}"
+      force: true
