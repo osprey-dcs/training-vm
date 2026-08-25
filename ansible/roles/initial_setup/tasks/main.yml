@@ -42,6 +42,7 @@
           - "{{ initial_setup_gnome_group }}"
           - epiphany-browser
           - gnome-shell-extension-manager
+          - spice-vdagent
         state: present
       when: install_graphics | bool
 
@@ -90,6 +91,12 @@
         install_weak_deps: false
       when: install_graphics | bool and ansible_facts['architecture'] == "aarch64"
       loop: "{{ initial_setup_gnome_group_aarch64 }}"
+
+    - name: RPM install additional tools
+      ansible.builtin.dnf:
+        name:
+          - spice-vdagent
+      when: install_graphics | bool
 
     - name: RPM clean cache
       ansible.builtin.command: dnf clean all
