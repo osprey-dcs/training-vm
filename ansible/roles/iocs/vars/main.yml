@@ -35,4 +35,4 @@ ioc_fetch_list:
 opi_list:
   - name: training
     url: https://github.com/osprey-dcs/training-opis.git
-    path: training
+    path: demo_opis
