@@ -25,7 +25,7 @@
   ansible.builtin.lineinfile:
     path: /opt/epics-tools/lib/phoebus/pom.xml
     search_string: '<openjfx.version>'
-    line: '<openjfx.version>25.0.4</openjfx.version>'
+    line: '    <openjfx.version>25.0.4</openjfx.version>'
   when: ansible_facts['architecture'] == "aarch64"
 
 - name: Build the common phoebus binaries (this may take a while)
