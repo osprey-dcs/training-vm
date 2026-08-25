@@ -6,6 +6,7 @@
 
 # Define local EPICS IOC installation path
 ioc_install_dir: /opt/iocs
+opi_install_dir: /opt/opis
 
 # List of IOCs to clone, build and set up as systemd service.
 # Replace lists with '[]' if no IOCs required.
@@ -29,3 +30,9 @@ ioc_fetch_list:
   - name: epics-train-2026
     url: https://github.com/kasemir/epics-train-2026.git
     path: epics-train-2026-kk
+
+# List of OPI repos to fetch
+opi_list:
+  - name: training
+    url: https://github.com/osprey-dcs/training-opis.git
+    path: training
