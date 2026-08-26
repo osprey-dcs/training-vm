@@ -109,6 +109,10 @@
     - name: RPM clean cache
       ansible.builtin.command: dnf clean all
 
+- name: Install wireshark packages
+  ansible.builtin.include_tasks:
+    file: wireshark.yml
+
 - name: Set default to graphical target
   when: not in_container and install_graphics | bool
   become: true

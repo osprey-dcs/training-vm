@@ -16,7 +16,10 @@ extra_packages:
   - net-tools 
   - procps-ng
   - sqlite
-  - inetutils-ping*
   - telnet 
   - bind9.16-utils
+
+wireshark_packages:
   - wireshark
+  - wireshark-common
+  - wireshark-dev
