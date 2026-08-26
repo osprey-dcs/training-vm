@@ -1,6 +1,7 @@
 ---
 # Allow creation of wireshark group
 - name: configure wireshark-common
+  become: true
   when: ansible_facts['os_family'] == 'Debian'
   ansible.builtin.debconf:
     name: wireshark-common
@@ -9,5 +10,14 @@
     vtype: select
 
 - name: install wireshark
+  become: true
   ansible.builtin.apt:
     name: "{{ wireshark_packages }}"
+
+- name: add epics-dev to wireshark group
+  become: true
+  ansible.builtin.user:
+    name: "{{ dev_user }}"
+    append: true
+    groups: 
+      - wireshark
