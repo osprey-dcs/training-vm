@@ -14,4 +14,8 @@ extra_packages:
   - inetutils-ping 
   - inetutils-telnet 
   - bind9-dnsutils
+
+wireshark_packages:
   - wireshark
+  - wireshark-common
+  - wireshark-dev
