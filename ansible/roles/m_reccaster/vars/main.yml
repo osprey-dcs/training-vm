@@ -1,0 +1,10 @@
+---
+reccaster_version: "1.9.7"
+
+m_reccaster_modules:
+  - id: reccaster
+    name: "reccaster module"
+    version: "{{ reccaster_version }}"
+    url: "https://github.com/ChannelFinder/reccaster/archive/refs/tags/{{ reccaster_version }}.tar.gz"
+    release_var: "RECCASTER"
+    release_sortkey: "10"
