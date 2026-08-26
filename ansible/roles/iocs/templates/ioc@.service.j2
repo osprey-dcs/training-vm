@@ -13,6 +13,7 @@ ExecStart=/usr/bin/procServ \
                     --chdir={{ ioc_install_dir }}/{{ item.path }}/iocBoot/ioc{{ item.iocBoot_dir }} \
                     --name=ioc{{ item.ioc_name }} \
                     --port=unix:/run/ioc@ioc{{ item.ioc_name }}/control \
+					--port=0 \
                     {{ ioc_install_dir }}/{{ item.path }}/iocBoot/ioc{{ item.iocBoot_dir }}/st.cmd
 SyslogIdentifier=ioc@ioc{{ item.ioc_name }}
 RuntimeDirectory=ioc@ioc{{ item.ioc_name }}
