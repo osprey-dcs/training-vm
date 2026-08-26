@@ -1,4 +1,4 @@
-# Training VM user notes
+# Training VM User Notes
 
 ## Users
 
@@ -26,10 +26,16 @@ Check for any errors in git submodule updates. If git is unable to update to the
 desired submodule commits due to changes, either `git restore ...` or `git
 stash` to resolve the issue then rerun the `update.sh` script.
 
-## Resources
+## VM Resources
 
 Suggested minimum: 2 CPUs, 4 GiB RAM
 Recommended: 4 CPUs, 6 GiB RAM
+
+## VM Images
+
+Download from:
+
+https://www.dropbox.com/scl/fo/qz06u8y75b7ybnikjcani/AB9Dx1N4AguWj_L174G6N2U?rlkey=m2z6bj3c5m2ksyvytud0acjes&st=265t7t5i&dl=0
 
 ## Windows, x86_64
 
@@ -42,17 +48,23 @@ Recommended: 4 CPUs, 6 GiB RAM
 * (optional) - add WSL to PowerShell profiles (Settings -> Add New Profile ->
     ...)
 
-#### Setting up Debian (WSL)
+#### Setting Up Debian (WSL)
 
 * Open Debian session
 * Create Debian user (user name is arbitrary)
 * Give sudo permissions to created user
 * Install packages:
-* $ sudo apt install qemu-system-x86_64
-* TODO: Add other required packages
+```
+$ sudo apt install curl
+$ sudo apt install vim git
+$ sudo apt install qemu-system-x86 qemu-utils
+$ sudo apt install bash-completion
+$ sudo apt install git-completion
+$ sudo apt install sed
+```
 * Install any other packages you may want on a Debian system
 
-#### Download .qcow2 image
+#### Download .qcow2 Image
 
 Get the image from:
 
