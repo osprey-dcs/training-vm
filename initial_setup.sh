@@ -12,7 +12,7 @@ elif [[ "$installer" == "dnf" ]]; then
     dnf install -y ansible python3-jmespath
 fi
 
-if [[ -d /ansible  || -h /ansible ]; then
+if [[ -d /ansible  || -h /ansible ]]; then
     cd /ansible
 else
     cd ansible
