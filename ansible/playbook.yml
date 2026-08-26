@@ -133,6 +133,12 @@
       when: m_stream is defined and m_stream | bool
       tags: m_stream
 
+    - name: reccaster
+      include_role:
+        name: m_reccaster
+      when: m_reccaster is defined and m_reccaster | bool
+      tags: m_reccaster
+
     - name: Docker
       include_role:
         name: docker
