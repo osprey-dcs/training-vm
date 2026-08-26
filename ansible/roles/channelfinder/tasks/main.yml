@@ -43,5 +43,5 @@
 - name: create homepage link
   ansible.builtin.include_tasks:
     file: add_homepage_link.yml
-  when: install_graphics | bool
+  when: channelfinder | bool
 
