@@ -5,3 +5,18 @@ initial_setup_gnome_group_aarch64:
   - "GNOME"
   - "Workstation product core"
 initial_setup_devel_group: "Development Tools"
+
+extra_packages:
+  - qemu-guest-agent
+  - wget 
+  - ca-certificates 
+  - nano 
+  - less 
+  - iproute
+  - net-tools 
+  - procps-ng
+  - sqlite
+  - inetutils-ping*
+  - telnet 
+  - bind9.16-utils
+  - wireshark
