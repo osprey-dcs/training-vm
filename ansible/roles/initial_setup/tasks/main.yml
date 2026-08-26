@@ -33,6 +33,10 @@
           - openssl
         state: present
 
+    - name: extra utility packages
+      ansible.builtin.apt:
+        name: "{{ extra_packages }}"
+
     # Firefox is not available as a package in default Debian. Use
     # epiphany-browser instead and create a symlink for the `firefox`
     # executable
@@ -73,6 +77,10 @@
           - openssl
         allowerasing: true # fix version conflicts for curl and coreutils on Rocky
         install_weak_deps: false
+
+    - name: extra utility packages
+      ansible.builtin.dnf:
+        name: "{{ extra_packages }}"
 
     - name: RPM Install Gnome - x86_64
       ansible.builtin.dnf:
