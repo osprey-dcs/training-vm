@@ -5,6 +5,7 @@
   ansible.builtin.dnf:
     name: 
       - procServ
+      - inetutils-telnet
       - socat
   when: ansible_facts['os_family'] == "RedHat"
 
@@ -13,6 +14,7 @@
   ansible.builtin.apt:
     name: 
       - procserv
+      - inetutils-telnet
       - socat
   when: ansible_facts['os_family'] == "Debian"
 
