@@ -1,5 +1,10 @@
 # Training VM user notes
 
+## Resources
+
+Suggested minimum: 2 CPUs, 4 GiB RAM
+Recommended: 4 CPUs, 6 GiB RAM
+
 ## Windows, x86_64
 
 ### WSL
@@ -69,3 +74,47 @@ Import image into UTM
 #### Start VM
 
 Adjust CPU, memory prior to starting via Edit option
+
+## Tests
+
+### EPICS
+
+#### Channel Access
+
+```
+$ caget EPICSTraining:Ramp
+$ camonitor EPICSTraining:Ramp
+```
+
+#### IOC console
+
+```
+$ socat - unix:/var/run/ioc@iocdemopvs/control
+$ socat - unix:/var/run/ioc@iocstats/control
+```
+
+### Archiver
+
+#### Web interface
+
+* Double-click "Training-VM Homepage" icon on Desktop
+* "Archiver" -> Archiver web interface
+
+### Phoebus
+
+#### Launch Phoebus
+
+```
+$ run-phoebus
+```
+
+#### Open demo display
+
+```
+/opt/opi/training/demo_opis/demopvs.bob
+```
+
+#### Test archiver integration
+
+* Right click on any of the PVs on `demopvs.bob`
+* Select Data Browser
