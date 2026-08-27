@@ -20,14 +20,21 @@
     - ca.lua
     - pva.lua
 
+- name: check if wireshark init file exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ wireshark_config_dir }}/init.lua"
+  register: init_lua
+
 - name: ensure wireshark init file exists
   become: true
   ansible.builtin.file:
     path: "{{ wireshark_config_dir }}/init.lua"
-    state: file
+    state: touch
     owner: root
     group: root
     mode: '0644'
+  when: init_lua.stat.exists == false
 
 - name: enable lua plugins - remove any existing definition
   become: true
