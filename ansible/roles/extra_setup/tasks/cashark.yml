@@ -51,7 +51,8 @@
     state: present
     insertafter: EOF
   loop:
-    - 'disable_lua = false'
+    - 'enable_lua = true'
+    - 'run_user_scripts_when_superuser = true'
     - 'dofile("ca.lua")'
     - 'dofile("pva.lua")'
 
