@@ -4,7 +4,7 @@
 - name: ensure directory exists
   become: true
   ansible.builtin.file:
-    path: "{{ wireshark_config_dir }}"
+    path: "{{ wireshark_plugins_dir }}"
     state: directory
     owner: root
     group: root
@@ -14,7 +14,7 @@
   become: true
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/mdavidsaver/cashark/refs/heads/master/{{ item }}
-    dest: "{{ wireshark_config_dir }}"
+    dest: "{{ wireshark_plugins_dir }}"
     mode: '0644'
   loop:
     - ca.lua
@@ -23,13 +23,13 @@
 - name: check if wireshark init file exists
   become: true
   ansible.builtin.stat:
-    path: "{{ wireshark_config_dir }}/init.lua"
+    path: "{{ wireshark_plugins_dir }}/init.lua"
   register: init_lua
 
 - name: ensure wireshark init file exists
   become: true
   ansible.builtin.file:
-    path: "{{ wireshark_config_dir }}/init.lua"
+    path: "{{ wireshark_plugins_dir }}/init.lua"
     state: touch
     owner: root
     group: root
@@ -39,14 +39,14 @@
 - name: enable lua plugins - remove any existing definition
   become: true
   ansible.builtin.lineinfile:
-    path: "{{ wireshark_config_dir }}/init.lua"
+    path: "{{ wireshark_plugins_dir }}/init.lua"
     search_string: disable_lua
     state: absent
 
 - name: enable lua plugins - explicitly enable
   become: true
   ansible.builtin.lineinfile:
-    path: "{{ wireshark_config_dir }}/init.lua"
+    path: "{{ wireshark_plugins_dir }}/init.lua"
     line: "{{ item }}" 
     state: present
     insertbefore: BOF
