@@ -1,0 +1,55 @@
+---
+# Install cashark plugins
+#
+- name: ensure directory exists
+  become: true
+  ansible.builtin.file:
+    path: "{{ wireshark_plugins_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: install plugin files
+  become: true
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/mdavidsaver/cashark/refs/heads/master/{{ item }}
+    dest: "{{ wireshark_plugins_dir }}"
+    mode: '0644'
+  loop:
+    - ca.lua
+    - pva.lua
+
+- name: check if wireshark init file exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ wireshark_plugins_dir }}/init.lua"
+  register: init_lua
+
+- name: ensure wireshark init file exists
+  become: true
+  ansible.builtin.file:
+    path: "{{ wireshark_plugins_dir }}/init.lua"
+    state: touch
+    owner: root
+    group: root
+    mode: '0644'
+  when: init_lua.stat.exists == false
+
+- name: enable lua plugins - remove any existing definition
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ wireshark_plugins_dir }}/init.lua"
+    search_string: disable_lua
+    state: absent
+
+- name: enable lua plugins - explicitly enable
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ wireshark_plugins_dir }}/init.lua"
+    line: "{{ item }}" 
+    state: present
+    insertbefore: BOF
+  loop:
+    - 'enable_lua = true'
+    - 'run_user_scripts_when_superuser = true'

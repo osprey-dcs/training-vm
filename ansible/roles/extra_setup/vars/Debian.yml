@@ -1,0 +1,23 @@
+---
+extra_packages:
+  - qemu-guest-agent
+  - wget 
+  - ca-certificates 
+  - nano 
+  - less 
+  - iproute2 
+  - net-tools 
+  - procps
+  - sqlite3 
+  - inetutils-ping 
+  - inetutils-telnet 
+  - bind9-dnsutils
+
+wireshark_packages:
+  - wireshark
+  - wireshark-common
+  - wireshark-dev
+
+wireshark_config_dir: /usr/share/wireshark
+wireshark_plugins_dir: /usr/lib/{{ ansible_facts['architecture'] }}-linux-gnu/wireshark/plugins
+
