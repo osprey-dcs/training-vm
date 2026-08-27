@@ -38,3 +38,7 @@
 - name: Install and configure wireshark 
   ansible.builtin.include_tasks:
     file: wireshark.yml
+
+- name: Install and configure cashark 
+  ansible.builtin.include_tasks:
+    file: cashark.yml
