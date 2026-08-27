@@ -18,5 +18,5 @@ wireshark_packages:
   - wireshark-common
   - wireshark-dev
 
-wireshark_config_dir: /etc/wireshark
+wireshark_config_dir: /usr/share/wireshark
 
