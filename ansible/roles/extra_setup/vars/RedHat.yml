@@ -1,0 +1,18 @@
+---
+extra_packages:
+  - qemu-guest-agent
+  - wget 
+  - ca-certificates 
+  - nano 
+  - less 
+  - iproute
+  - net-tools 
+  - procps-ng
+  - sqlite
+  - telnet 
+  - bind9.16-utils
+
+wireshark_packages:
+  - wireshark
+  - wireshark-common
+  - wireshark-dev

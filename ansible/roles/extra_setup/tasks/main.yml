@@ -1,0 +1,40 @@
+---
+- name: Load distribution variables
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_facts['distribution'] }}.yml"
+        - "{{ ansible_facts['os_family'] }}.yml"
+
+- name: APT Upgrade all packages; install extra packages
+  when: ansible_facts['os_family'] == 'Debian'
+  become: true
+  block:
+    - name: APT Update and upgrade all packages
+      ansible.builtin.apt:
+        upgrade: dist
+        update_cache: true
+        autoclean: true
+        autoremove: true
+
+    - name: extra utility packages
+      ansible.builtin.apt:
+        name: "{{ extra_packages }}"
+
+- name: RPM Upgrade all packages; install extra packages
+  when: ansible_facts['os_family'] == 'RedHat'
+  become: true
+  block:
+    - name: RPM Upgrade all packages
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+        update_cache: true
+
+    - name: extra utility packages
+      ansible.builtin.dnf:
+        name: "{{ extra_packages }}"
+
+- name: Install wireshark packages
+  ansible.builtin.include_tasks:
+    file: wireshark.yml
