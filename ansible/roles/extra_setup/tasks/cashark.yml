@@ -49,10 +49,19 @@
     path: "{{ wireshark_config_dir }}/init.lua"
     line: "{{ item }}" 
     state: present
-    insertafter: EOF
+    insertbefore: BOF
   loop:
     - 'enable_lua = true'
     - 'run_user_scripts_when_superuser = true'
+
+- name: enable lua plugins - explicitly enable
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ wireshark_config_dir }}/init.lua"
+    line: "{{ item }}" 
+    state: present
+    insertafter: EOF
+  loop:
     - 'dofile("ca.lua")'
     - 'dofile("pva.lua")'
 
