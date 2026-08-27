@@ -35,6 +35,6 @@
       ansible.builtin.dnf:
         name: "{{ extra_packages }}"
 
-- name: Install wireshark packages
+- name: Install and configure wireshark 
   ansible.builtin.include_tasks:
     file: wireshark.yml

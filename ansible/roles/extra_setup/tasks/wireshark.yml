@@ -10,10 +10,18 @@
     vtype: select
 
 - name: install wireshark
+  when: ansible_facts['os_family'] == 'Debian'
   become: true
   ansible.builtin.apt:
     name: "{{ wireshark_packages }}"
 
+- name: install wireshark
+  when: ansible_facts['os_family'] == 'RedHat'
+  become: true
+  ansible.builtin.dnf:
+    name: "{{ wireshark_packages }}"
+
+# TODO: work out how to ensure wireshark group created in RedHat
 - name: add epics-dev to wireshark group
   become: true
   ansible.builtin.user:
