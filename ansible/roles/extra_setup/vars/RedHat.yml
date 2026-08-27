@@ -16,3 +16,5 @@ wireshark_packages:
   - wireshark
   - wireshark-common
   - wireshark-dev
+
+wireshark_config_dir: /usr/share/wireshark
