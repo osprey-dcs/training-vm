@@ -39,7 +39,9 @@ else
     slug=""
 fi
 
-( cd ${collection_dir}; git checkout --recurse-submodules ${slug}; git pull --recurse-submodules )
+# Stash any user changes prior to doing the updates, then restore them prior to running the update.
+# Ignore non-zero return code from `git stash pop` when there is nothing stashed.
+( cd ${collection_dir}; git stash; git checkout --recurse-submodules ${slug}; git pull --recurse-submodules; git stash pop || true )
 
 if [ ! -e "${collection_dir}/vm-setup/ansible/vars/local.yml" ]; then
     ln -s "../../../local.yml" "${collection_dir}/vm-setup/ansible/vars/local.yml"
