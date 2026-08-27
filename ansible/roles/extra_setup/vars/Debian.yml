@@ -19,4 +19,5 @@ wireshark_packages:
   - wireshark-dev
 
 wireshark_config_dir: /usr/share/wireshark
+wireshark_plugins_dir: /usr/lib/{{ ansible_facts['architecture'] }}-linux-gnu/wireshark/plugins
 
