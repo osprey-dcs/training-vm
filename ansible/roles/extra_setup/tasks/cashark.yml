@@ -24,7 +24,7 @@
   become: true
   ansible.builtin.file:
     path: "{{ wireshark_config_dir }}/init.lua"
-    state: present
+    state: file
     owner: root
     group: root
     mode: '0644'
