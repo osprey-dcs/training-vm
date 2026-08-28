@@ -24,3 +24,12 @@
     state: present
     master: br0
 
+- name: bring up interfaces
+  become: true
+  community.general.nmcli:
+    conn_name: "{{ item }}"
+    state: up
+    autoconnect: true
+  loop:
+    - br0
+    - tap0
