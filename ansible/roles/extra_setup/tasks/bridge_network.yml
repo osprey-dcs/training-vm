@@ -14,4 +14,4 @@
     - br0.network
     - tap0.netdev
     - 1_br0_tap0.network
-
+  notify: restart networking
