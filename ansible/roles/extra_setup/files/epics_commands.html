@@ -1,0 +1,34 @@
+<h1>EPICS commands (from terminal)</h1>
+<h3>Accessing PV values</h3> 
+<p style="font-family:'Lucida Console', monospace">
+	caget &lt;RECORD_NAME&gt;[.FIELD]<br>
+	pvget &lt;RECORD_NAME&gt;[.FIELD]<br>
+</p>
+
+<h3>Writing to PV values</h3> 
+<p style="font-family:'Lucida Console', monospace">
+	caput &lt;RECORD_NAME&gt;[.FIELD]<br>
+	pvput &lt;RECORD_NAME&gt;[.FIELD]<br>
+</p>
+
+<h3>Connection to IOC shell</h3>
+<p style="font-family:'Lucida Console', monospace">
+socat - unix:/var/run/ioc@iocsdemopvs/control<br>
+</p>
+OR <br>
+<p style="font-family:'Lucida Console', monospace">
+	telnet localhost &lt;port_number&gt;<br>
+</p>
+where <code>&lt;port_number&gt;</code> is found in
+<code>/run/ioc@iocdemopvs/info</code><br>
+
+<h3>Controlling IOC service</h3> 
+<p style="font-family:'Lucida Console', monospace">
+	sudo systemctl status ioc@iocdemopvs.service<br>
+	sudo systemctl stop ioc@iocdemopvs.service<br>
+	sudo systemctl start ioc@iocdemopvs.service<br>
+	sudo systemctl restart ioc@iocdemopvs.service<br>
+	sudo systemctl enable ioc@iocdemopvs.service<br>
+	sudo systemctl disable ioc@iocdemopvs.service<br>
+</p>
+
