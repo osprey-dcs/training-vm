@@ -57,7 +57,7 @@
     name: "{{ training_vm_homepage_dir }}/pages"
     state: directory
     owner: "{{ dev_user }}"
-    owner: "{{ group }}"
+    group: "{{ dev_user }}"
     mode: "0755"
 
 - name: Add docs to homepage
