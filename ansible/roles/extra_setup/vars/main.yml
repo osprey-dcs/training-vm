@@ -1,2 +1,13 @@
 ---
 timezone: Europe/Berlin
+
+homepage_docs:
+  - file: bash_commands.html
+    descriptor: bash commands
+    link: 70-bash
+  - file: iocsh_commands.html
+    descriptor: iocsh commands
+    link: 71-iocsh
+  - file: epics_commands.html
+    descriptor: EPICS commands
+    link: 72-epics

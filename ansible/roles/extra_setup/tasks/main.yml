@@ -51,3 +51,16 @@
 - name: Create always-on network interface
   ansible.builtin.include_tasks:
     file: bridge_network.yml
+      
+- name: ensure pages directory exists
+  ansible.builtin.file:
+    name: "{{ training_vm_homepage_dir }}/pages"
+    state: directory
+    owner: "{{ dev_user }}"
+    group: "{{ dev_user }}"
+    mode: "0755"
+
+- name: Add docs to homepage
+  ansible.builtin.include_tasks:
+    file: homepage.yml
+  loop: "{{ homepage_docs }}"
