@@ -6,7 +6,7 @@
 #
 - name: Add link to home page
   ansible.builtin.copy:
-    src: |
+    content: |
       <li><a href="file://{{ training_vm_homepage_dir }}/pages/{{ item.file }}">{{ item.descriptor }}</a></li>
     dest: "{{ training_vm_homepage_dir }}/links.d/{{ item.link }}"
     owner: "{{ dev_user }}"
