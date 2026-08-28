@@ -21,3 +21,4 @@ wireshark_packages:
 wireshark_config_dir: /usr/share/wireshark
 wireshark_plugins_dir: /usr/lib/{{ ansible_facts['architecture'] }}-linux-gnu/wireshark/plugins
 
+network_manager: network-manager
