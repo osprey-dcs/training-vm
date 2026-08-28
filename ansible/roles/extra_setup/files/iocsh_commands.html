@@ -1,0 +1,32 @@
+<h1>IOC Shell Commands</h1>
+
+<h3>List Records</h3>
+<p style="font-family:'Lucida Console', monospace">
+	dbl [record_type]<br>
+</p>
+
+If supplied, record_type restricts the list to that type. <br>
+
+e.g., dbl ai<br>
+
+<h3>Print Fields of One Record</h3>
+<p style="font-family:'Lucida Console', monospace">
+	dbpr name_of_record [interest_level: int] <br>
+</p>
+interest_level, default = 0. Controls the number of fields shown.<br>
+
+<h3>Search For Record Name Pattern</h3>
+<p style="font-family:'Lucida Console', monospace">
+	dbgrep glob_pattern<br>
+</p>
+
+<h3>Get Field Value</h3>
+<p style="font-family:'Lucida Console', monospace">
+	dbgf RECORD_NAME[.FIELD]<br>
+</p>
+
+<h3>Put Field Value</h3>
+<p style="font-family:'Lucida Console', monospace">
+	dbpf RECORD_NAME[.FIELD] VALUE<br>
+</p>
+
