@@ -1,0 +1,17 @@
+---
+# Tasks to set up 'always on' software bridge NIC
+#
+- name: configure bridge device
+  community.general.nmcli:
+    type: bridge
+    conn_name: br0
+    state: present
+    stp: false
+    ip4: 10.200.200.1/24
+
+- name: configure tap device
+  community.general.nmcli:
+    type: bridge-slave
+    conn_name: tap0
+    master: br0
+
