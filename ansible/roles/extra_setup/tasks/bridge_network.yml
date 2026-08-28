@@ -21,5 +21,6 @@
   community.general.nmcli:
     type: bridge-slave
     conn_name: tap0
+    state: present
     master: br0
 
