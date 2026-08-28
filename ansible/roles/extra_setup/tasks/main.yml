@@ -42,3 +42,7 @@
 - name: Install and configure cashark 
   ansible.builtin.include_tasks:
     file: cashark.yml
+
+- name: set timezone
+  community.general.timezone:
+    name: "{{ timezone }}"
