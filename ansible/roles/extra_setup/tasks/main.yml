@@ -51,3 +51,7 @@
 - name: Create always-on network interface
   ansible.builtin.include_tasks:
     file: bridge_network.yml
+      
+- name: Add docs to homepage
+  ansible.builtin.include_tasks:
+    file: homepage.yml

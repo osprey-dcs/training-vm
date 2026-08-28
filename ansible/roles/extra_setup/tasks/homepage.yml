@@ -33,3 +33,6 @@
     - file: iocsh_commands.html
       descriptor: iocsh commands
       link: 61-iocsh
+    - file: epics_commands.html
+      descriptor: epics commands
+      link: 62-epics
