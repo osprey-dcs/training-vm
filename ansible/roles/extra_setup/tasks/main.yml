@@ -55,3 +55,4 @@
 - name: Add docs to homepage
   ansible.builtin.include_tasks:
     file: homepage.yml
+  loop: "{{ homepage_docs }}"

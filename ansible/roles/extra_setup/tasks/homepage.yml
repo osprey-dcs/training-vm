@@ -4,36 +4,23 @@
 #
 # Add extra homepage entries
 #
-- name: update homepage with documentation entries
+- name: Add link to home page
+  ansible.builtin.copy:
+    src: |
+      <li><a href="file://{{ training_vm_homepage_dir }}/pages/{{ item.file }}">{{ item.descriptor }}</a></li>
+    dest: "{{ training_vm_homepage_dir }}/links.d/{{ item.link }}"
+    owner: "{{ dev_user }}"
+    group: "{{ dev_user }}"
+    mode: "0644"
+  notify: Reassemble Training-VM homepage
+
+- name: Add iocsh commands to page
   become: true
-  block:
-  - name: Add link to home page
-    ansible.builtin.copy:
-      src: |
-        <li><a href="file://{{ training_vm_homepage_dir }}/pages/{{ item.file }}">{{ item.descriptor }}</a></li>
-      dest: "{{ training_vm_homepage_dir }}/links.d/{{ item.link }}"
-      owner: "{{ dev_user }}"
-      group: "{{ dev_user }}"
-      mode: "0644"
-    notify: Reassemble Training-VM homepage
+  ansible.builtin.copy:
+    src: "{{ item.file }}"
+    dest: "{{ training_vm_homepage_dir }}/pages/{{ item.file }}"
+    owner: "{{ dev_user }}"
+    group: "{{ dev_user }}"
+    mode: "0644"
+  notify: Reassemble Training-VM homepage
 
-  - name: Add iocsh commands to page
-    become: true
-    ansible.builtin.copy:
-      src: "{{ item.file }}"
-      dest: "{{ training_vm_homepage_dir }}/pages/{{ item.file }}"
-      owner: "{{ dev_user }}"
-      group: "{{ dev_user }}"
-      mode: "0644"
-    notify: Reassemble Training-VM homepage
-
-  loop:
-    - file: bash_commands.html
-      descriptor: Bash commands
-      link: 60-bash
-    - file: iocsh_commands.html
-      descriptor: iocsh commands
-      link: 61-iocsh
-    - file: epics_commands.html
-      descriptor: epics commands
-      link: 62-epics
