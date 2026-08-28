@@ -60,7 +60,16 @@
     group: "{{ dev_user }}"
     mode: "0755"
 
-- name: Add docs to homepage
-  ansible.builtin.include_tasks:
+- name: Load homepage variables
+  ansible.builtin.include_vars:
     file: homepage.yml
-  loop: "{{ homepage_docs }}"
+
+- name: Add doc pages to homepage
+  ansible.builtin.include_tasks:
+    file: homepage_pages.yml
+  loop: "{{ homepage_pages }}"
+
+- name: Add doc links to homepage
+  ansible.builtin.include_tasks:
+    file: homepage_links.yml
+  loop: "{{ homepage_links }}"
