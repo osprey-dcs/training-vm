@@ -1,0 +1,6 @@
+[NetDev]
+Name=tap0
+Kind=tap
+MACAddress=none
+[Tap]
+KeepCarrier=yes

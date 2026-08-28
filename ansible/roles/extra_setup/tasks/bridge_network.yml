@@ -1,0 +1,17 @@
+---
+# Tasks to set up 'always on' software bridge NIC
+#
+- name: install files for network bridge
+  become: true
+  ansible.builtin.copy:
+    dest: "/etc/systemd/network/{{ item }}"
+    src: "{{ item }}"
+    mode: '0644'
+    owner: root
+    group: root
+  loop:
+    - br0.netdev
+    - br0.network
+    - tap0.netdev
+    - 1_br0_tap0.network
+  notify: restart networking

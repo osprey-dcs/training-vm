@@ -47,3 +47,7 @@
   become: true
   community.general.timezone:
     name: "{{ timezone }}"
+      
+- name: Create always-on network interface
+  ansible.builtin.include_tasks:
+    file: bridge_network.yml
