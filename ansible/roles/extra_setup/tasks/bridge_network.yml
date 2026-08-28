@@ -9,3 +9,9 @@
     mode: '0644'
     owner: root
     group: root
+  loop:
+    - br0.netdev
+    - br0.network
+    - tap0.netdev
+    - 1_br0_tap0.network
+
