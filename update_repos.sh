@@ -21,8 +21,15 @@ if [ -d "./vm-setup/ansible" ]; then
     collection_dir="."
 fi
 
-# Stash any user changes prior to doing the updates, then restore them prior to running the update.
-# Handles empty stash if no existing changes
+if [ ! -d ${collection_dir}/vm-setup/ansible ]; then
+    echo "update.sh [collection_dir] [ansible-playbook args...]"
+    exit 1
+fi
+
+# Stash any user changes prior to doing the updates, 
+# then restore them prior to running the update.
+# Handle empty stash if no existing changes
+#
 pushd ${collection_dir}
 stashed=$(git stash create 'update.sh saving')
 [ -z "$stashed" ] || git reset --hard
