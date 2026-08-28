@@ -14,7 +14,7 @@
     mode: "0644"
   notify: Reassemble Training-VM homepage
 
-- name: Add iocsh commands to page
+- name: Add page file
   become: true
   ansible.builtin.copy:
     src: "{{ item.file }}"
@@ -22,5 +22,4 @@
     owner: "{{ dev_user }}"
     group: "{{ dev_user }}"
     mode: "0644"
-  notify: Reassemble Training-VM homepage
 

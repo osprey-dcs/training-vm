@@ -1,0 +1,16 @@
+homepage_pages:
+  - file: bash_commands.html
+    descriptor: bash commands
+    link: 70-bash
+  - file: iocsh_commands.html
+    descriptor: iocsh commands
+    link: 71-iocsh
+  - file: epics_commands.html
+    descriptor: EPICS commands
+    link: 72-epics
+
+homepage_links:
+  - url: https://docs.google.com/document/d/1HNqCfhJ4w3TsGbS6w-BSEWW9pE3m60BcuANYffNVKec/edit?usp=sharing
+    descriptor: Useful links
+    link: 80-useful-links
+
