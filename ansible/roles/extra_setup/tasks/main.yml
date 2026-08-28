@@ -44,5 +44,6 @@
     file: cashark.yml
 
 - name: set timezone
+  become: true
   community.general.timezone:
     name: "{{ timezone }}"
