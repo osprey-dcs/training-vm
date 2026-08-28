@@ -4,8 +4,9 @@
 #
 # Add extra homepage entries
 #
-- block:
+- name: update homepage with documentation entries
   become: true
+  block:
   - name: Add link to home page
     ansible.builtin.copy:
       src: |
