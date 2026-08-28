@@ -1,7 +1,14 @@
 ---
 # Tasks to set up 'always on' software bridge NIC
 #
+- name: install packages
+  become: true
+  ansible.builtin.package:
+    name: "{{ network_manager }}"
+    state: present
+
 - name: configure bridge device
+  become: true
   community.general.nmcli:
     type: bridge
     conn_name: br0
@@ -10,6 +17,7 @@
     ip4: 10.200.200.1/24
 
 - name: configure tap device
+  become: true
   community.general.nmcli:
     type: bridge-slave
     conn_name: tap0
