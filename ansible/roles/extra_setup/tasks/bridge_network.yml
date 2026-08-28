@@ -1,35 +1,11 @@
 ---
 # Tasks to set up 'always on' software bridge NIC
 #
-- name: install packages
+- name: install files for network bridge
   become: true
-  ansible.builtin.package:
-    name: "{{ network_manager }}"
-    state: present
-
-- name: configure bridge device
-  become: true
-  community.general.nmcli:
-    type: bridge
-    conn_name: br0
-    state: present
-    stp: false
-    ip4: 10.200.200.1/24
-
-- name: configure tap device
-  become: true
-  community.general.nmcli:
-    type: bridge-slave
-    conn_name: tap0
-    state: present
-    master: br0
-
-- name: bring up interfaces
-  become: true
-  community.general.nmcli:
-    conn_name: "{{ item }}"
-    state: up
-    autoconnect: true
-  loop:
-    - br0
-    - tap0
+  ansible.builtin.copy:
+    dest: "/etc/systemd/network/{{ item }}"
+    src: "{{ item }}"
+    mode: '0644'
+    owner: root
+    group: root
