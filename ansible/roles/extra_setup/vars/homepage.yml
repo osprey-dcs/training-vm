@@ -1,4 +1,7 @@
 homepage_pages:
+  - file: update_commands.html
+    descriptor: VM update commands
+    link: 40-vm-update
   - file: bash_commands.html
     descriptor: bash commands
     link: 70-bash
