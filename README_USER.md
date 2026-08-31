@@ -118,11 +118,17 @@ Get the `.utm` folder from the link in [VM images](#vm-images)
 
 #### Import image
 
-Import image into UTM
+Import image into UTM:
+
+* File -> Open
+* Locate downloaded epics-training-debian13-aarch64-v3.utm folder
+* Select Open
 
 #### Start VM
 
 Adjust CPU, memory prior to starting via Edit option
+
+Select Play button on VM
 
 ## Tests
 
