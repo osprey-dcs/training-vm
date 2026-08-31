@@ -79,14 +79,14 @@ In WSL:
 ```
 $ cd ~
 $ mkdir VMs
-$ cp /mnt/c/Users/<user-name>/Downloads/epics-training-debian13-x86_64-v2.qcow2
+$ cp /mnt/c/Users/<user-name>/Downloads/epics-training-debian13-x86_64-v3.qcow2
 VMs (modify source path depending on download location)
 ```
 
 #### Launch VM
 
 ```
-sudo qemu-system-x86_64 -M q35,accel=kvm:tcg -m 4G -smp 2 -drive file=VMs/epics-training-debian13-x86_64-v2.qcow2,if=virtio -net nic,model=virtio -net user -cpu host
+sudo qemu-system-x86_64 -M q35,accel=kvm:tcg -m 4G -smp 2 -drive file=VMs/epics-training-debian13-x86_64-v3.qcow2,if=virtio -net nic,model=virtio -net user -cpu host
 ```
 
 Adjust CPUs with -smp option, memory with -m option, path to VM image in -drive
