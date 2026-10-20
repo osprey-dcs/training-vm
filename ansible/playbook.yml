@@ -133,6 +133,12 @@
       when: docker is defined and docker | bool
       tags: docker
 
+    - name: IOCs
+      include_role:
+        name: iocs
+      when: iocs is defined and iocs | bool
+      tags: iocs
+
     - name: Bluesky
       when: bluesky is defined and bluesky | bool
       become: true

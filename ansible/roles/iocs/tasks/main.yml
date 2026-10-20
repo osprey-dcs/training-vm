@@ -1,0 +1,84 @@
+---
+# Install required packages for IOCs
+- name: install packages
+  become: true
+  ansible.builtin.dnf:
+    name: 
+      - procServ
+      - inetutils-telnet
+      - socat
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: install packages
+  become: true
+  ansible.builtin.apt:
+    name: 
+      - procserv
+      - inetutils-telnet
+      - socat
+  when: ansible_facts['os_family'] == "Debian"
+
+# Create a user and group to own the installed IOCs
+- name: create EPICS IOC runner group
+  become: true
+  ansible.builtin.group:
+    name: "{{ epics_run_user }}"
+    state: present
+
+- name: create EPICS IOC runner user
+  become: true
+  ansible.builtin.user:
+    name: "{{ epics_run_user }}"
+    comment: EPICS IOC user
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: "{{ epics_run_user }}"
+    state: present
+
+- name: create a tmp directory for {{ epics_run_user }}
+  become: true
+  ansible.builtin.file:
+    name: "{{ epics_run_user_tmp }}"
+    state: directory
+    owner: "{{ epics_run_user }}"
+    group: "{{ epics_run_user }}"
+
+# Create IOC top-level directory
+- name: Create IOC top-level directory
+  become: true
+  ansible.builtin.file:
+    path: "{{ ioc_install_dir }}"
+    state: directory
+    owner: "{{ epics_run_user }}"
+    group: "{{ epics_run_user }}"
+    mode: 0755
+
+# Create OPI top-level directory
+- name: Create OPI top-level directory
+  become: true
+  ansible.builtin.file:
+    path: "{{ opi_install_dir }}"
+    state: directory
+    owner: "{{ epics_run_user }}"
+    group: "{{ epics_run_user }}"
+    mode: 0755
+
+# Install and build IOCs
+- name: Install and build IOCs
+  include_tasks: install_iocs.yml
+  when: iocs is defined and iocs | bool
+  loop: "{{ ioc_list }}"
+
+# Fetch IOCs that do not need building
+- name: Fetch IOCs
+  include_tasks: fetch_iocs.yml
+  when: iocs is defined and iocs | bool
+  loop: "{{ ioc_fetch_list }}"
+
+# Install OPIs
+- name: Install OPIs
+  include_tasks: install_opis.yml
+  when: iocs is defined and iocs | bool
+  loop: "{{ opi_list }}"
+
+

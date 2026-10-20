@@ -1,0 +1,38 @@
+---
+# TODO: Add an IOC with iocStats loaded to provide some meaningful PVs.
+# TODO: Add a vacuum IOC
+# TODO: Add a sequence IOC
+# TODO: Update the ramp IOC with PVs for sine, noise
+
+# Define local EPICS IOC installation path
+ioc_install_dir: /opt/iocs
+opi_install_dir: /opt/opi/training
+
+# List of IOCs to clone, build and set up as systemd service.
+# Replace lists with '[]' if no IOCs required.
+#
+# TODO: Create a different user for owning the IOCs to stop
+# people changing files and causing git pulls to fail.
+ioc_list:
+  - name: demopvs
+    url: https://github.com/osprey-dcs/training-ioc-demopvs.git
+    path: demopvs
+    ioc_name: demopvs
+    iocBoot_dir: demopvs
+  - name: stats
+    url: https://github.com/osprey-dcs/training-ioc-stats.git
+    path: stats
+    ioc_name: stats
+    iocBoot_dir: stats
+
+# List of IOCs to fetch but not build
+ioc_fetch_list:
+  - name: epics-train-2026
+    url: https://github.com/kasemir/epics-train-2026.git
+    path: epics-train-2026-kk
+
+# List of OPI repos to fetch
+opi_list:
+  - name: training
+    url: https://github.com/osprey-dcs/training-opis.git
+    path: demo_opis
