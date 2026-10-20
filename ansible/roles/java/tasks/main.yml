@@ -1,5 +1,10 @@
 # Install Java
 ---
+- name: include variables for architecture-specific items
+  ansible.builtin.include_vars:
+    dir: vars/arch
+    files_matching: "{{ ansible_facts['architecture'] }}.yml"
+
 - name: Ensure java_home directory exists
   become: true
   file:
@@ -9,12 +14,24 @@
 - name: Install open jdk 21
   become: true
   ansible.builtin.unarchive:
-    src: "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.9%2B10/OpenJDK21U-jdk_{{ arch.java }}_linux_hotspot_21.0.9_10.tar.gz"
+    src: "{{ java_jdk_url }}"
     dest: "{{ java_home }}"
     remote_src: true
     creates: "{{ java_home }}/bin/java"
     extra_opts:
       - --strip-components=1
+  when: ansible_facts['architecture'] == "x86_64"
+
+- name: Install open jdk 25
+  become: true
+  ansible.builtin.unarchive:
+    src: "{{ java_jdk_url }}"
+    dest: "{{ java_home }}"
+    remote_src: true
+    creates: "{{ java_home }}/bin/java"
+    extra_opts:
+      - --strip-components=1
+  when: ansible_facts['architecture'] == "aarch64"
 
 - name: Check if CA certificate (DER format) exists
   ansible.builtin.stat:
