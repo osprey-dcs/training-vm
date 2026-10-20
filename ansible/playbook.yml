@@ -49,6 +49,12 @@
       when: initial_setup is defined and initial_setup | bool
       tags: initial_setup
 
+    - name: Extra setup
+      include_role:
+        name: extra_setup
+      when: extra_setup is defined and extra_setup | bool
+      tags: extra_setup
+
     - name: CA trust
       include_role:
         name: catrust

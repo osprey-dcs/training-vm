@@ -14,6 +14,7 @@ m_opcua: true
 m_stream: true
 m_areadetector: true
 
+extra_setup: true
 catrust: false
 phoebus: true
 oac_tree: true
