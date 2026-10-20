@@ -14,6 +14,10 @@ TRAINING_VM_SHA="WILL BE SET BY create_vm.sh"
 INSTALL_GRAPHICS="WILL BE SET BY create_vm.sh"
 SET_CATRUST="WILL BE SET BY create_vm.sh"
 INSTALL_TEST_HOOK="WILL BE SET BY create_vm.sh"
+VARS_FILE="WILL BE SET BY create_vm.sh"
+INSTALL_COLLECTION="WILL BE SET BY create_vm.sh"
+COLLECTION_REPO_URL="WILL BE SET BY create_vm.sh"
+COLLECTION_REPO_BRANCH="WILL BE SET BY create_vm.sh"
 
 # Can be set through environment
 ANSIBLE_ARGS="${ANSIBLE_ARGS:-}"
@@ -59,7 +63,7 @@ ansible-galaxy install -r requirements.yml || true
 # Run the playbook
 # We pass install_graphics and initial_setup=true
 ansible-playbook playbook.yml \
-    -e @vars/local.yml \
+    -e "@vars/$VARS_FILE" \
     -e "initial_setup=true" \
     -e "install_graphics=$INSTALL_GRAPHICS" \
     -e "catrust=$SET_CATRUST" \
@@ -88,6 +92,18 @@ fi
 
 # Remove the cloned training-vm repo
 rm -fr /opt/vm-setup
+
+# Optionally install the training collection
+if [[ "$INSTALL_COLLECTION" == "true" ]]; then
+    install -d -m 700 -o epics-dev -g epics-dev /home/epics-dev
+    cd /home/epics-dev
+    sudo --user=epics-dev git clone -b "$COLLECTION_REPO_BRANCH" "$COLLECTION_REPO_URL" /home/epics-dev/training
+    cd /home/epics-dev/training
+    sudo --user=epics-dev git submodule init
+    sudo --user=epics-dev git submodule update
+    cd /home/epics-dev/training/vm-setup
+    sudo --user=epics-dev ./update.sh ..
+fi
 
 # Signal completion. The EXIT trap above handles the actual shutdown.
 # We use a flag file that the host can poll for if needed.
