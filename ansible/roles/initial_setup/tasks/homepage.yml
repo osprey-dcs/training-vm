@@ -70,6 +70,23 @@
     group: "{{ dev_user }}"
     mode: "0755"
 
+# TODO: Work out why we cannot make the desktop launcher trusted
+# Keepting this for now to show the steps we tried.
+- name: install dbus-launch
+  become: true
+  ansible.builtin.apt:
+    name: dbus-x11
+    state: present
+
+# Testing if running twice works
+- name: make the vm homepage launcher trusted
+  ansible.builtin.command:
+    cmd: dbus-launch gio set /home/{{ dev_user }}/Desktop/training-vm-homepage.desktop "metadata::trusted" true
+    
+- name: make the vm homepage launcher trusted
+  ansible.builtin.command:
+    cmd: dbus-launch gio set /home/{{ dev_user }}/Desktop/training-vm-homepage.desktop "metadata::trusted" true
+    
 # GNOME Shell has shown no desktop icons at all since 3.28 without this
 # extension. Fedora/Ubuntu enable it by default; Rocky/Debian's GNOME task
 # groups may not include or enable it, so do both explicitly here too -
@@ -112,3 +129,19 @@
     - name: Compile the dconf database
       ansible.builtin.command: dconf update
       changed_when: true
+        
+# dconf database was not working on Debian GNOME
+# Use this more brute-force method for now
+- name: Enable the GNOME desktop-icons extension 
+  block:
+    - name: undo disable of desktop icons
+      community.general.dconf:
+        key: "/org/gnome/shell/disabled-extensions"
+        state: absent
+
+    - name: enable desktop icons
+      community.general.dconf:
+        key: "/org/gnome/shell/enabled-extensions"
+        value: "['ding@rastersoft.com']"
+        state: present
+

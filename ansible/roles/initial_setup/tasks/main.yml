@@ -31,11 +31,26 @@
           - curl
           - sudo
           - openssl
+        state: present
 
-    - name: APT Install Gnome
+    # Firefox is not available as a package in default Debian. Use
+    # epiphany-browser instead and create a symlink for the `firefox`
+    # executable
+    - name: APT Install Gnome and tools
       ansible.builtin.apt:
         name:
           - "{{ initial_setup_gnome_group }}"
+          - epiphany-browser
+          - gnome-shell-extension-manager
+          - spice-vdagent
+        state: present
+      when: install_graphics | bool
+
+    - name: create firefox symlink
+      ansible.builtin.file:
+        src: /usr/bin/epiphany-browser
+        dest: /usr/local/bin/firefox
+        state: link
       when: install_graphics | bool
 
 - name: RPM Upgrade all packages; install Dev Tools and Gnome
@@ -59,12 +74,28 @@
         allowerasing: true # fix version conflicts for curl and coreutils on Rocky
         install_weak_deps: false
 
-    - name: RPM Install Gnome
+    - name: RPM Install Gnome - x86_64
       ansible.builtin.dnf:
         name:
-          - "@{{ initial_setup_gnome_group }}"
+          - "@{{ item }}"
         allowerasing: true
         install_weak_deps: false
+      when: install_graphics | bool and ansible_facts['architecture'] == "x86_64"
+      loop: "{{ initial_setup_gnome_group_aarch64 }}"
+
+    - name: RPM Install Gnome - aarch64
+      ansible.builtin.dnf:
+        name:
+          - "@{{ item }}"
+        allowerasing: true
+        install_weak_deps: false
+      when: install_graphics | bool and ansible_facts['architecture'] == "aarch64"
+      loop: "{{ initial_setup_gnome_group_aarch64 }}"
+
+    - name: RPM install additional tools
+      ansible.builtin.dnf:
+        name:
+          - spice-vdagent
       when: install_graphics | bool
 
     - name: RPM clean cache
@@ -133,3 +164,13 @@
       register: firewalld_service_disable
       failed_when: "firewalld_service_disable|failed and ('Could not find the requested service' not in firewalld_service_disable.msg)"
       ignore_errors: true
+
+- name: Enable DHCP
+  when: ansible_facts['os_family'] == 'Debian'
+  become: true
+  ansible.builtin.copy:
+    src: files/dhcp.network
+    dest: /etc/systemd/network/dhcp.network
+    mode: '0644'
+    owner: root
+    group: root
