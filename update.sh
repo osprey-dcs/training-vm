@@ -1,6 +1,9 @@
 #!/bin/bash
 # update.sh
 
+# abort script on any errors
+set -e
+
 # Update script that tries to pull the training VM to the appropriate latest versions
 
 # Improved robustness:
@@ -36,12 +39,20 @@ else
     slug=""
 fi
 
-( cd ${collection_dir}; git checkout --recurse-submodules ${slug}; git pull --recurse-submodules )
+# Stash any user changes prior to doing the updates, then restore them prior to running the update.
+# Handles empty stash if no existing changes
+pushd ${collection_dir}
+stashed=$(git stash create 'update.sh saving')
+[ -z "$stashed" ] || git reset --hard
+git checkout --recurse-submodules ${slug}
+git pull --recurse-submodules
+[ -z "$stashed" ] || git stash apply "$stashed"
+popd
 
 if [ ! -e "${collection_dir}/vm-setup/ansible/vars/local.yml" ]; then
     ln -s "../../../local.yml" "${collection_dir}/vm-setup/ansible/vars/local.yml"
 fi
 
 cd ${bootstrap_dir}/ansible
-ansible-galaxy install -r requirements.yml || true
+ansible-galaxy install -r requirements.yml
 ansible-playbook playbook.yml "$@" -e "@vars/local.yml"
