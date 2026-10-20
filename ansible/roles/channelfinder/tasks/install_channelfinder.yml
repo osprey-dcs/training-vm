@@ -1,0 +1,36 @@
+--- 
+#- name: create channelfinder build directory
+  #ansible.builtin.file:
+    #name: "{{ channelfinder_build_dir }}"
+    #state: directory
+
+#- name: install Containerfile
+  #ansible.builtin.template:
+    #src: templates/Containerfile.j2
+    #dest: "{{ channelfinder_build_dir }}/Containerfile"
+
+- name: Create channelfinder container
+  become: true
+  containers.podman.podman_container:
+    name: channelfinder
+    image: ghcr.io/channelfinder/channelfinderservice:ChannelFinder-{{ channelfinder_version }}
+    state: quadlet
+    env:
+      ES_JAVA_OPTS: "-Xms256m -Xmx256m"
+      discovery.type: "single-node"
+      xpack.security.enabled: "false"
+      network.host: "127.0.0.1"
+      bootstrap.memory_lock: "true"
+    network: host
+    quadlet_options:
+      - |
+        [Install]
+        WantedBy=default.target
+
+- name: Enable channelfinder container
+  become: true
+  ansible.builtin.systemd:
+    name: channelfinder
+    daemon-reload: true
+    state: started
+    enabled: true

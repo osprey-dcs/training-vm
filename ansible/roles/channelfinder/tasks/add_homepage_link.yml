@@ -1,0 +1,28 @@
+---
+# Contributes a link to the shared Training-VM homepage set up by
+# initial_setup (see roles/initial_setup/tasks/homepage.yml) instead of
+# driving a real browser through Ansible - the previous "auto-add a Firefox
+# bookmark" approach hit an unresolved, Fedora-only headless-Firefox
+# compositor bug (SWGL "failed mapping default framebuffer", unaffected by
+# every env var tried) that made CI flaky without ever being fully diagnosed.
+- name: Add Elasticsearch link to the Training-VM homepage
+  become: true
+  ansible.builtin.copy:
+    content: |
+      <li><a href="{{ elasticsearch_homepage_link_url }}">{{ elasticsearch_homepage_link_title }}</a></li>
+    dest: "{{ training_vm_homepage_dir }}/links.d/60-elasticsearch"
+    owner: "{{ dev_user }}"
+    group: "{{ dev_user }}"
+    mode: "0644"
+  notify: Reassemble Training-VM homepage
+
+- name: Add Channelfinder link to the Training-VM homepage
+  become: true
+  ansible.builtin.copy:
+    content: |
+      <li><a href="{{ channelfinder_homepage_link_url }}">{{ channelfinder_homepage_link_title }}</a></li>
+    dest: "{{ training_vm_homepage_dir }}/links.d/61-channelfinder"
+    owner: "{{ dev_user }}"
+    group: "{{ dev_user }}"
+    mode: "0644"
+  notify: Reassemble Training-VM homepage

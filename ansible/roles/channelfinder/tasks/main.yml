@@ -1,0 +1,47 @@
+---
+- name: install required packages to support selinux changes
+  become: true
+  ansible.builtin.dnf:
+    name: 
+      - libselinux-dev
+      - grubby
+      - python3-libselinux
+      - selinux-policy-default
+    state: present 
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: disable selinux 
+  become: true
+  ansible.posix.selinux:
+    state: disabled
+    update_kernel_param: true
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: install podman package
+  become: true
+  ansible.builtin.package:
+    name: podman
+    state: present
+
+# Install Elasticsearch container
+- name: Install elasticsearch
+  ansible.builtin.include_tasks:
+    file: install_elasticsearch.yml
+  when: channelfinder | bool
+
+# Remove Elasticsearch container
+- name: Remove elasticsearch
+  ansible.builtin.include_tasks:
+    file: remove_elasticsearch.yml
+  when: not channelfinder | bool
+
+- name: Install channelfinder
+  ansible.builtin.include_tasks:
+    file: install_channelfinder.yml
+  when: channelfinder | bool
+
+- name: create homepage link
+  ansible.builtin.include_tasks:
+    file: add_homepage_link.yml
+  when: channelfinder | bool
+

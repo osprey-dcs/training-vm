@@ -4,3 +4,5 @@ collections:
   - community.mysql
   - community.general
   - community.docker
+  - community.podman
+

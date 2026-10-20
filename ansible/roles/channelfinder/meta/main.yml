@@ -1,0 +1,4 @@
+---
+# Dependencies for channelfinder
+dependencies:
+  - role: java

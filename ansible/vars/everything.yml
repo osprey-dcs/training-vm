@@ -20,3 +20,4 @@ oac_tree: true
 archiver_appliance: true
 docker: true
 bluesky: true
+channelfinder: true
